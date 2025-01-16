@@ -27,7 +27,7 @@ export default function Home() {
           </div>
         )}
         {messages.length === 0 && (
-          <div className="flex items-center justify-center p-8  rounded-lg mb-4">
+          <div className="flex items-center justify-center p-8 rounded-lg mb-4">
             <div className="text-gray-300 text-center">
               <h2 className="text-2xl font-bold mb-2">Welcome to Zeno</h2>
               <p>Ask me anything about your Algebra class!</p>
@@ -53,7 +53,9 @@ export default function Home() {
                 </div>
               </span>
               <p className="leading-relaxed" style={{ color: "aliceblue" }}>
-                <span className="block font-bold">{m.role === 'assistant' ? 'Zeno' : 'You'}</span>
+                <span className="block font-bold">
+                  {m.role === "assistant" ? "Zeno" : "You"}
+                </span>
                 {m.content}
               </p>
             </div>
