@@ -1,0 +1,38 @@
+Compiled /api/chat in 1073ms (1182 modules)
+[WARN]: You have enabled LangSmith tracing without backgrounding callbacks.
+[WARN]: If you are not using a serverless environment where you must wait for tracing calls to finish,
+[WARN]: we suggest setting "process.env.LANGCHAIN_CALLBACKS_BACKGROUND=true" to avoid additional latency.
+ ⨯ TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at connectionStringHasValidScheme (/home/runner/workspace/node_modules/mongodb-connection-string-url/lib/index.js:9:30)
+    at new ConnectionString (/home/runner/workspace/node_modules/mongodb-connection-string-url/lib/index.js:85:34)
+    at parseOptions (/home/runner/workspace/node_modules/mongodb/lib/connection_string.js:204:17)
+    at new MongoClient (/home/runner/workspace/node_modules/mongodb/lib/mongo_client.js:46:63)
+    at eval (webpack-internal:///(rsc)/./src/utils/openai.ts:19:16)
+    at (rsc)/./src/utils/openai.ts (/home/runner/workspace/.next/server/app/api/chat/route.js:222:1)
+    at __webpack_require__ (/home/runner/workspace/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./src/app/api/chat/route.ts:8:71)
+    at (rsc)/./src/app/api/chat/route.ts (/home/runner/workspace/.next/server/app/api/chat/route.js:212:1)
+    at __webpack_require__ (/home/runner/workspace/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=%2Fhome%2Frunner%2Fworkspace%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fhome%2Frunner%2Fworkspace&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!:17:106)
+    at (rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=%2Fhome%2Frunner%2Fworkspace%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fhome%2Frunner%2Fworkspace&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! (/home/runner/workspace/.next/server/app/api/chat/route.js:202:1)
+    at __webpack_require__ (/home/runner/workspace/.next/server/webpack-runtime.js:33:42)
+    at __webpack_exec__ (/home/runner/workspace/.next/server/app/api/chat/route.js:232:39)
+    at /home/runner/workspace/.next/server/app/api/chat/route.js:233:1200
+    at __webpack_require__.X (/home/runner/workspace/.next/server/webpack-runtime.js:163:21)
+    at /home/runner/workspace/.next/server/app/api/chat/route.js:233:47
+    at Object.<anonymous> (/home/runner/workspace/.next/server/app/api/chat/route.js:236:3)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+    at Module._load (node:internal/modules/cjs/loader:1104:12)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at mod.require (/home/runner/workspace/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:179:18)
+    at requirePage (/home/runner/workspace/node_modules/next/dist/server/require.js:109:84)
+    at /home/runner/workspace/node_modules/next/dist/server/load-components.js:74:84
+    at async loadComponentsImpl (/home/runner/workspace/node_modules/next/dist/server/load-components.js:74:26)
+    at async DevServer.findPageComponentsImpl (/home/runner/workspace/node_modules/next/dist/server/next-server.js:675:36) {
+  page: '/api/chat'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 954ms (1344 modules)
