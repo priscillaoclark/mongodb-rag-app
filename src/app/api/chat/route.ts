@@ -1,6 +1,5 @@
 import { StreamingTextResponse, LangChainStream, Message } from "ai";
 import { ChatOpenAI } from "@langchain/openai";
-
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { vectorStore } from "@/utils/openai";
 import { NextResponse } from "next/server";
@@ -11,13 +10,6 @@ export async function POST(req: Request) {
         const { stream, handlers } = LangChainStream();
         const body = await req.json();
         const messages: Message[] = body.messages ?? [];
-
-        messages.unshift({
-            id: messages.length.toString(),
-            role: "system",
-            content: "Answer only from your knowledge based vectorStore.",
-        });
-
         const question = messages[messages.length - 1].content;
 
         const model = new ChatOpenAI({
@@ -31,30 +23,20 @@ export async function POST(req: Request) {
             searchKwargs: { fetchK: 10, lambda: 0.25 },
         });
 
-        // Log retrieved documents
-        const relevantDocs = await retriever.getRelevantDocuments(question);
-        console.log('Retrieved vectors for question:', question);
-        relevantDocs.forEach((doc, index) => {
-            console.log(`Document ${index + 1}:`, doc.pageContent.substring(0, 150) + '...');
-        });
-
         const conversationChain = ConversationalRetrievalQAChain.fromLLM(
             model,
             retriever,
             {
                 memory: new BufferMemory({
                     memoryKey: "chat_history",
+                    returnMessages: true,
                 }),
-            },
+            }
         );
-        await conversationChain.call({
+
+        conversationChain.invoke({
             question: question,
-            chat_history: messages.slice(1).map(m => ({
-                type: m.role === 'user' ? 'human' : 'ai',
-                content: m.content
-            }))
-        }, {
-            callbacks: [handlers]
+            chat_history: messages.slice(1),
         });
 
         return new StreamingTextResponse(stream);
