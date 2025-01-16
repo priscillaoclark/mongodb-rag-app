@@ -46,9 +46,19 @@ export default function Home() {
               >
                 <div className="rounded-full bg-gray-100 border p-1">
                   {m.role === "user" ? (
-                    <img src="/user.png" />
+                    <img 
+                      src="/user.png"
+                      alt="User"
+                      width={32}
+                      height={32}
+                    />
                   ) : (
-                    <img src="/bot.png" />
+                    <img
+                      src="/bot.png" 
+                      alt="Bot"
+                      width={32}
+                      height={32}
+                    />
                   )}
                 </div>
               </span>
