@@ -1,0 +1,24 @@
+Error: input values have 2 keys, you must specify an input key or pass only 1 key as input
+    at getInputValue (webpack-internal:///(rsc)/./node_modules/@langchain/core/dist/memory.js:32:15)
+    at BufferMemory.saveContext (webpack-internal:///(rsc)/./node_modules/langchain/node_modules/@langchain/community/dist/memory/chat_memory.js:53:116)
+    at ConversationalRetrievalQAChain.invoke (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:80:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Error: input values have 2 keys, you must specify an input key or pass only 1 key as input
+    at getInputValue (webpack-internal:///(rsc)/./node_modules/@langchain/core/dist/memory.js:32:15)
+    at BufferMemory.saveContext (webpack-internal:///(rsc)/./node_modules/langchain/node_modules/@langchain/community/dist/memory/chat_memory.js:53:116)
+    at ConversationalRetrievalQAChain.invoke (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:80:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+ ⨯ node_modules/@langchain/core/dist/memory.js (27:14) @ getInputValue
+ ⨯ unhandledRejection: Error: input values have 2 keys, you must specify an input key or pass only 1 key as input
+    at getInputValue (webpack-internal:///(rsc)/./node_modules/@langchain/core/dist/memory.js:32:15)
+    at BufferMemory.saveContext (webpack-internal:///(rsc)/./node_modules/langchain/node_modules/@langchain/community/dist/memory/chat_memory.js:53:116)
+    at ConversationalRetrievalQAChain.invoke (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:80:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+null
+ ⨯ node_modules/@langchain/core/dist/memory.js (27:14) @ getInputValue
+ ⨯ unhandledRejection: Error: input values have 2 keys, you must specify an input key or pass only 1 key as input
+    at getInputValue (webpack-internal:///(rsc)/./node_modules/@langchain/core/dist/memory.js:32:15)
+    at BufferMemory.saveContext (webpack-internal:///(rsc)/./node_modules/langchain/node_modules/@langchain/community/dist/memory/chat_memory.js:53:116)
+    at ConversationalRetrievalQAChain.invoke (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:80:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+null
