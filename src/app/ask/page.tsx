@@ -16,25 +16,21 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8"
         style={{height: '70vh', flexDirection: "column-reverse", display: "flex" }}
       >
-        <>
-          {waitingForAI &&
-            (
-              <div className="loading">
-                <img src='/1484.gif'></img>
-              </div>
-            )}
-        </>
-        <>
-          {messages.length == 0 &&
-            (
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <img style={{ width: "25%", marginBottom: "2%" }} src='/MongoDB_White.svg' />
-                <span style={{ marginBottom: '2%', fontSize: '40px', justifySelf: 'center' }}>+</span>
-                <img style={{ width: "8%", marginBottom: "2%" }} src='/openAI.svg' />
-              </div>
-            )
-          }
-        </>
+        {waitingForAI && (
+          <div className="flex items-center justify-center p-4 bg-gray-800/50 rounded-lg mb-4">
+            <div className="animate-pulse text-blue-400">
+              Zeno is thinking...
+            </div>
+          </div>
+        )}
+        {messages.length === 0 && (
+          <div className="flex items-center justify-center p-8 bg-gray-800/50 rounded-lg mb-4">
+            <div className="text-gray-300 text-center">
+              <h2 className="text-2xl font-bold mb-2">Welcome to Zeno</h2>
+              <p>Ask me anything about your coursework!</p>
+            </div>
+          </div>
+        )}
         <div className="pr-4 messages">
           {messages.map(m => (
             <div key={m.id} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
