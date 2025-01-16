@@ -1,34 +1,102 @@
-import React from 'react'
-import NavBar from './component/navbar'
-
+import React from "react";
+import NavBar from "./component/navbar";
 
 const Home = () => {
   return (
     <div>
       <NavBar />
-      <div className='overview-text'>
+      <div className="overview-text">
+        <header>
+          <h1>Welcome to Zeno</h1>
+          <p>Your Free, Personalized AI Tutor for Students and Teachers</p>
+        </header>
 
-        <h1 style={{ fontWeight: 'bold', fontSize: '2em' }}>RAG QnA Chatbot</h1>
-        <br />
-        
-        <p>With this RAG (Retrieval-Augmented Generation) application, you can quickly deploy a chatbot that is enhanced by your own data. By simply uploading any PDF file(s) of your choosing, you will be creating your own custom Questions and Answers (QnA) chatbot.</p>
-        <br />
+        <section>
+          <h2>
+            10 Million Children in the US Need a Tutor But Can’t Afford One
+          </h2>
+          <p>Zeno is here to change that.</p>
+        </section>
 
-        <h2 style={{ fontStyle: 'italic' }}>Getting Started</h2>
-        <ul>
-          <li>Navigate to the &ldquo;Train&rdquo; tab above.</li>
-          <li>Here you can upload any number of PDF files you wish to ask the chatbot about, or that you wish the chatbot would consider when providing an answer.</li>
-          <li>After uploading your files, navigate to &ldquo;QnA&rdquo; tab.</li>
-          <li>In the prompt, you can now ask questions about the uploaded PDF files in natural language, and receive a response.</li>
-        </ul>
+        <section>
+          <h2>Meet Zeno</h2>
+          <p>
+            Zeno is the first <strong>100% free AI tutor</strong> designed to
+            collaborate with teachers, helping every student succeed in their
+            academic journey.
+          </p>
+          <ul>
+            <li>
+              <strong>Personalized Tutoring:</strong> Zeno works one-on-one with
+              each student, offering tailored guidance based on classroom
+              materials.
+            </li>
+            <li>
+              <strong>Teacher Collaboration:</strong> Zeno seamlessly integrates
+              with Learning Management Systems (LMS), ensuring it aligns with
+              lesson plans, homework, and curriculum updates.
+            </li>
+            <li>
+              <strong>Ethical Learning:</strong> Zeno doesn’t do homework for
+              students. Instead, it coaches them, building critical thinking and
+              problem-solving skills.
+            </li>
+          </ul>
+        </section>
 
-        <br />
+        <section>
+          <h2>How Zeno Works</h2>
+          <ol>
+            <li>
+              <strong>Engage in Real-Time:</strong> Zeno chats with students to
+              help them understand concepts and complete assignments without
+              giving away answers.
+            </li>
+            <li>
+              <strong>Classroom-Ready:</strong> Automatically updates when
+              teachers modify lesson plans, keeping everything relevant.
+            </li>
+            <li>
+              <strong>Empowers Teachers:</strong> Provides insights to teachers,
+              helping them track progress and tailor their teaching strategies.
+            </li>
+          </ol>
+        </section>
 
-        <p>This application leverages MongoDB&apos;s robust vector store capabilities. Each uploaded PDF is embedded in a vectorized format into your MongoDB Atlas cluster. The vector store efficiently organizes and indexes data, streamlining the process of generating responses and insights from the RAG model.</p>
+        <section>
+          <h2>Why Zeno?</h2>
+          <p>Unlike other AI tools, Zeno:</p>
+          <ul>
+            <li>
+              <strong>Doesn't encourage cheating</strong>
+            </li>
+            <li>
+              <strong>Knows what's happening in the classroom</strong>
+            </li>
+            <li>
+              <strong>
+                Communicates with teachers to provide meaningful insights
+              </strong>
+            </li>
+          </ul>
+          <p>
+            Best of all, Zeno is <strong>free</strong> and easy to use—no
+            changes required to how teachers teach or manage their classrooms.
+          </p>
+        </section>
+
+        <section class="cta">
+          <h2>Join Us in Shaping the Future of Education</h2>
+          <p>
+            Millions of children are struggling in school, and Zeno can make a
+            difference. Together, we can create a world where every child has
+            access to personalized, effective, and ethical tutoring.
+          </p>
+          <a href="#get-started">Start Your Journey with Zeno Today</a>
+        </section>
       </div>
     </div>
+  );
+};
 
-  )
-}
-
-export default Home
+export default Home;
