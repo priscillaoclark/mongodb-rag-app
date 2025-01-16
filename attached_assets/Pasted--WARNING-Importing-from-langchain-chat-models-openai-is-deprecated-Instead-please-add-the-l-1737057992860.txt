@@ -1,0 +1,36 @@
+[WARNING]: Importing from "langchain/chat_models/openai" is deprecated.
+
+Instead, please add the "@langchain/openai" package to your project with e.g.
+
+    $ npm install @langchain/openai
+
+and import from "@langchain/openai".
+
+This will be mandatory after the next "langchain" minor version bump to 0.2.
+[WARN]: You have enabled LangSmith tracing without backgrounding callbacks.
+[WARN]: If you are not using a serverless environment where you must wait for tracing calls to finish,
+[WARN]: we suggest setting "process.env.LANGCHAIN_CALLBACKS_BACKGROUND=true" to avoid additional latency.
+Error: Error: Invalid identifier zeno-demo. Identifier must be in the format of 'owner/repo:commit' or 'owner/repo'.
+    at parseOwnerRepoCommit (webpack-internal:///(rsc)/./node_modules/langchainhub/dist/client.js:25:15)
+    at Client.pull (webpack-internal:///(rsc)/./node_modules/langchainhub/dist/client.js:273:22)
+    at Module.pull (webpack-internal:///(rsc)/./node_modules/langchain/dist/hub.js:28:33)
+    at POST (webpack-internal:///(rsc)/./src/app/api/chat/route.ts:24:73)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1333:42)
+    at async cacheEntry.responseCache.get.routeKind (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/runner/workspace/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:807:17)
+    at async /home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/home/runner/workspace/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/home/runner/workspace/node_modules/next/dist/server/lib/start-server.js:140:13)
