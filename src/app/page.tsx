@@ -5,26 +5,30 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
-      <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
-        
-        <header className="text-center mb-16">
-          <h1 className="text-6xl font-bold mt-6 mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
-            Welcome to Zeno
-          </h1>
-          <p className="text-xl text-gray-300">
-            Your Free, Personalized AI Tutor for Students and Teachers
-          </p>
-        </header>
+      <div className="relative">
+        <div 
+          className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-20"
+          style={{ height: '100vh' }}
+        ></div>
+        <div className="relative max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
+          <header className="text-center mb-16">
+            <h1 className="text-6xl font-bold mt-6 mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
+              Welcome to Zeno
+            </h1>
+            <p className="text-xl text-gray-300">
+              Your Free, Personalized AI Tutor for Students and Teachers
+            </p>
+          </header>
 
-        <section className="mb-2 flex justify-center items-center">
-          <img
-            src="/logo.png"
-            alt="Logo"
-            width={200}
-            height={200}
-            className="mx-auto"
-          />
-        </section>
+          <section className="mb-2 flex justify-center items-center">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              width={200}
+              height={200}
+              className="mx-auto"
+            />
+          </section>
 
         <section className="mb-12 p-6 text-center rounded-lg backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-4 text-yellow-300">
