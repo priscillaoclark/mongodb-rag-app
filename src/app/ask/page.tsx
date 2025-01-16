@@ -1,20 +1,23 @@
-'use client';
+"use client";
 
-import { useChat } from 'ai/react';
-import { useState } from 'react';
-import NavBar from '../component/navbar';
-
+import { useChat } from "ai/react";
+import { useState } from "react";
+import NavBar from "../component/navbar";
 
 export default function Home() {
   const [waitingForAI, setWaitingForAI] = useState<Boolean>(false);
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
-      <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8"
-        style={{height: '70vh', flexDirection: "column-reverse", display: "flex" }}
+      <div
+        className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8"
+        style={{
+          height: "70vh",
+          flexDirection: "column-reverse",
+          display: "flex",
+        }}
       >
         {waitingForAI && (
           <div className="flex items-center justify-center p-4 bg-gray-800/50 rounded-lg mb-4">
@@ -24,37 +27,44 @@ export default function Home() {
           </div>
         )}
         {messages.length === 0 && (
-          <div className="flex items-center justify-center p-8 bg-gray-800/50 rounded-lg mb-4">
+          <div className="flex items-center justify-center p-8  rounded-lg mb-4">
             <div className="text-gray-300 text-center">
               <h2 className="text-2xl font-bold mb-2">Welcome to Zeno</h2>
-              <p>Ask me anything about your coursework!</p>
+              <p>Ask me anything about your Algebra class!</p>
             </div>
           </div>
         )}
         <div className="pr-4 messages">
-          {messages.map(m => (
-            <div key={m.id} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-              <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8" 
-                    style={{ margin: '30px', marginTop: '0px' }}>
+          {messages.map((m) => (
+            <div
+              key={m.id}
+              className="flex gap-3 my-4 text-gray-600 text-sm flex-1"
+            >
+              <span
+                className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8"
+                style={{ margin: "30px", marginTop: "0px" }}
+              >
                 <div className="rounded-full bg-gray-100 border p-1">
-                  {m.role === 'user' ? (
+                  {m.role === "user" ? (
                     <img src="/user.png" />
                   ) : (
                     <img src="/bot.png" />
                   )}
                 </div>
               </span>
-              <p className="leading-relaxed" style={{ color: 'aliceblue' }}>
+              <p className="leading-relaxed" style={{ color: "aliceblue" }}>
                 <span className="block font-bold">{m.role}</span>
                 {m.content}
               </p>
             </div>
           ))}
-
         </div>
 
         <div className="flex items-center pt-0 chat-window">
-          <form className="flex items-center justify-center w-full space-x-2" onSubmit={handleSubmit}>
+          <form
+            className="flex items-center justify-center w-full space-x-2"
+            onSubmit={handleSubmit}
+          >
             <input
               value={input}
               onChange={handleInputChange}
