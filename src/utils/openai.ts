@@ -35,8 +35,9 @@ export function vectorStore(): MongoDBAtlasVectorSearch {
             ...searchArgs(),
             searchType: "similarity",
             searchKwargs: { 
-                k: 4,
-                score_threshold: 0.5,
+                k: 5,
+                score_threshold: 0.3,
+                numCandidates: 20,
                 filter: {
                     "text": { "$exists": true },
                     "text_embedding": { "$exists": true }
