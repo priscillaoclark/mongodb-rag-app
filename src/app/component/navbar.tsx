@@ -1,30 +1,44 @@
-"use client";
-import Link from 'next/link';
 
-const NavBar: React.FC = () => {
+"use client"
 
+import Link from 'next/link'
+import { cn } from "@/lib/utils"
+
+const NavBar = () => {
   return (
-    <nav style={{ backgroundColor: '#00684A', padding: '1rem' }}>
-      <ol style={{ listStyleType: 'none', margin: 10, padding: 0 }}>
-        <img src='/mongoDB.svg' width={"1%"} style={{ display: 'inline', marginLeft: '1rem' }} />
-        <li style={{ display: 'inline', marginLeft: '5rem' }}>
-          <Link href="/">
+    <div className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <nav className="container flex h-14 items-center">
+        <div className="mr-4 flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <img src="/logo.png" alt="Logo" className="h-6 w-6" />
+            <span className="hidden font-bold sm:inline-block">
+              Zeno
+            </span>
+          </Link>
+        </div>
+        <div className="flex gap-6 md:gap-10">
+          <Link
+            href="/"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
             Home
           </Link>
-        </li>
-        <li style={{ display: 'inline', marginLeft: '2rem' }}>
-          <Link href="/ask">
+          <Link
+            href="/ask"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
             QnA
           </Link>
-        </li>
-        <li style={{ display: 'inline', marginLeft: '2rem' }}>
-          <Link href="/teach">
+          <Link
+            href="/teach"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
             Train
           </Link>
-        </li>
-      </ol>
-    </nav>
-  );
-};
+        </div>
+      </nav>
+    </div>
+  )
+}
 
-export default NavBar;
+export default NavBar
