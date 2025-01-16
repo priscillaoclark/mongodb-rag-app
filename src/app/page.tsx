@@ -15,8 +15,8 @@ const Home = () => {
           </p>
         </header>
 
-        <section className="mb-16 text-center">
-          <img src="/logo.png" alt="Logo" width={200} height={200} />
+        <section className="mb-16 flex justify-center items-center">
+          <img src="/logo.png" alt="Logo" width={200} height={200} className="mx-auto" />
         </section>
 
         <section className="mb-12 p-6 text-center rounded-lg backdrop-blur-sm">
