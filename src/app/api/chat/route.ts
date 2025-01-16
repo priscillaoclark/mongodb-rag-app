@@ -47,15 +47,13 @@ export async function POST(req: Request) {
                 }),
             },
         );
-        const response = await conversationChain.call({
+        const response = await conversationChain.invoke({
             question: question,
-            chat_history: [],
+            chat_history: messages.slice(1).map(m => ({
+                type: m.role === 'user' ? 'human' : 'ai',
+                content: m.content
+            }))
         });
-
-        // Write the response to the stream
-        const writer = stream.getWriter();
-        await writer.write(new TextEncoder().encode(response.text));
-        await writer.close();
 
         return new StreamingTextResponse(stream);
     } catch (e) {
