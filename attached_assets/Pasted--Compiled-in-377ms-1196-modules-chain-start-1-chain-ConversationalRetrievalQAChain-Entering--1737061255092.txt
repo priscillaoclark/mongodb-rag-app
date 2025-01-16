@@ -1,0 +1,110 @@
+ ✓ Compiled in 377ms (1196 modules)
+[chain/start] [1:chain:ConversationalRetrievalQAChain] Entering Chain run with input: {
+  "question": "what do you know about algebra?",
+  "chat_history": []
+}
+[retriever/start] [1:chain:ConversationalRetrievalQAChain > 2:retriever:VectorStoreRetriever] Entering Retriever run with input: {
+  "query": "what do you know about algebra?"
+}
+[retriever/end] [1:chain:ConversationalRetrievalQAChain > 2:retriever:VectorStoreRetriever] [485ms] Exiting Retriever run with output: {
+  "documents": []
+}
+[chain/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain] Entering Chain run with input: {
+  "question": "what do you know about algebra?",
+  "input_documents": [],
+  "chat_history": ""
+}
+[chain/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain] Entering Chain run with input: {
+  "question": "what do you know about algebra?",
+  "chat_history": "",
+  "context": ""
+}
+[llm/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain > 5:llm:ChatOpenAI] Entering LLM run with input: {
+  "messages": [
+    [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "Use the following pieces of context to answer the users question. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.\n----------------\n",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "what do you know about algebra?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  ]
+}
+[llm/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain > 5:llm:ChatOpenAI] [1.33s] Exiting LLM run with output: {
+  "generations": [
+    [
+      {
+        "text": "Algebra is a branch of mathematics that deals with symbols and the rules for manipulating those symbols. It involves solving equations, working with variables, and studying mathematical relationships. Algebra is an essential part of mathematics and is used in various fields such as science, engineering, and economics.",
+        "generationInfo": {
+          "prompt": 0,
+          "completion": 0
+        },
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "Algebra is a branch of mathematics that deals with symbols and the rules for manipulating those symbols. It involves solving equations, working with variables, and studying mathematical relationships. Algebra is an essential part of mathematics and is used in various fields such as science, engineering, and economics.",
+            "additional_kwargs": {},
+            "response_metadata": {
+              "estimatedTokenUsage": {
+                "promptTokens": 58,
+                "completionTokens": 55,
+                "totalTokens": 113
+              },
+              "prompt": 0,
+              "completion": 0
+            },
+            "tool_call_chunks": [],
+            "tool_calls": [],
+            "invalid_tool_calls": []
+          }
+        }
+      }
+    ]
+  ],
+  "llmOutput": {
+    "estimatedTokenUsage": {
+      "promptTokens": 58,
+      "completionTokens": 55,
+      "totalTokens": 113
+    }
+  }
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain] [1.34s] Exiting Chain run with output: {
+  "text": "Algebra is a branch of mathematics that deals with symbols and the rules for manipulating those symbols. It involves solving equations, working with variables, and studying mathematical relationships. Algebra is an essential part of mathematics and is used in various fields such as science, engineering, and economics."
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain] [1.34s] Exiting Chain run with output: {
+  "text": "Algebra is a branch of mathematics that deals with symbols and the rules for manipulating those symbols. It involves solving equations, working with variables, and studying mathematical relationships. Algebra is an essential part of mathematics and is used in various fields such as science, engineering, and economics."
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain] [1.83s] Exiting Chain run with output: {
+  "text": "Algebra is a branch of mathematics that deals with symbols and the rules for manipulating those symbols. It involves solving equations, working with variables, and studying mathematical relationships. Algebra is an essential part of mathematics and is used in various fields such as science, engineering, and economics.",
+  "sourceDocuments": []
+}
