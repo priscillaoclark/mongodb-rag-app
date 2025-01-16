@@ -1,8 +1,7 @@
+"use client";
 
-"use client"
-
-import Link from 'next/link'
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const NavBar = () => {
   return (
@@ -27,18 +26,18 @@ const NavBar = () => {
             href="/ask"
             className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
           >
-            QnA
+            Demo
           </Link>
           <Link
             href="/teach"
             className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
           >
-            Train
+            Upload Docs
           </Link>
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
