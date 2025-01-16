@@ -23,11 +23,15 @@ export async function POST(req: Request) {
             searchKwargs: { k: 4 },
         });
 
-        const conversationChain = ConversationalRetrievalQAChain.fromLLM(
+        const chain = ConversationalRetrievalQAChain.fromLLM(
             model,
             retriever,
             {
                 returnSourceDocuments: true,
+                verbose: true,
+                questionGeneratorChainOptions: {
+                    llm: model,
+                },
                 memory: new BufferMemory({
                     memoryKey: "chat_history",
                     returnMessages: true,
@@ -37,11 +41,8 @@ export async function POST(req: Request) {
             }
         );
 
-        await conversationChain.call({
+        await chain.call({
             question: question,
-            chat_history: messages.slice(0, -1),
-        }, {
-            callbacks: [handlers],
         });
 
         return new StreamingTextResponse(stream);
