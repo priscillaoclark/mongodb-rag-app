@@ -30,6 +30,14 @@ export async function POST(req: Request) {
             searchType: "mmr",
             searchKwargs: { fetchK: 10, lambda: 0.25 },
         });
+
+        // Log retrieved documents
+        const relevantDocs = await retriever.getRelevantDocuments(question);
+        console.log('Retrieved vectors for question:', question);
+        relevantDocs.forEach((doc, index) => {
+            console.log(`Document ${index + 1}:`, doc.pageContent.substring(0, 150) + '...');
+        });
+
         const conversationChain = ConversationalRetrievalQAChain.fromLLM(
             model,
             retriever,
