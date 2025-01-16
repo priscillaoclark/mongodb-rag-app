@@ -50,50 +50,14 @@
   }
 }
 
-html, body {
+html {
   height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-#__next, main {
-  flex: 1;
-  width: 100%;
-  min-height: 100vh;
-}
-
-div {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.container {
-  max-width: 100%;
-  padding: 0 1rem;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-section {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  box-sizing: border-box;
 }
 
 .messages {
