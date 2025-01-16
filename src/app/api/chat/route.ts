@@ -11,10 +11,17 @@ export async function POST(req: Request) {
         const { stream, handlers } = LangChainStream();
         const body = await req.json();
         const messages: Message[] = body.messages ?? [];
+
+        messages.unshift({
+            id: messages.length.toString(),
+            role: "system",
+            content: "Answer only from your knowledge based vectorStore.",
+        });
+
         const question = messages[messages.length - 1].content;
 
         const model = new ChatOpenAI({
-            temperature: 0.8,
+            temperature: 0.5,
             streaming: true,
             callbacks: [handlers],
         });
