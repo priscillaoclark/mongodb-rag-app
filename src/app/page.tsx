@@ -109,8 +109,11 @@ const Home = () => {
             difference. Together, we can create a world where every child has
             access to personalized, effective, and ethical tutoring.
           </p>
-          <a href="#get-started" className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-            Start Your Journey with Zeno Today
+          <a 
+            href="mailto:hellozeno.tutor@gmail.com?subject=Starting%20My%20Journey%20with%20Zeno&body=Hi%20Zeno%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20tutoring%20services." 
+            className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            Contact Zeno to Get Started
           </a>
         </section>
       </div>
