@@ -33,11 +33,11 @@ export function vectorStore(): MongoDBAtlasVectorSearch {
         new OpenAIEmbeddings(),
         {
             ...searchArgs(),
-            searchType: "similarity",
             searchKwargs: { 
                 k: 5,
                 score_threshold: 0.3,
                 numCandidates: 20,
+                searchType: "similarity",
                 filter: {
                     "text": { "$exists": true },
                     "text_embedding": { "$exists": true }
