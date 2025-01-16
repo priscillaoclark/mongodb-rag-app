@@ -30,13 +30,13 @@ export async function POST(req: Request) {
                 memory: new BufferMemory({
                     memoryKey: "chat_history",
                     returnMessages: true,
+                    inputKey: "question",
                 }),
             }
         );
 
-        conversationChain.invoke({
+        await conversationChain.call({
             question: question,
-            chat_history: messages.slice(1),
         });
 
         return new StreamingTextResponse(stream);
