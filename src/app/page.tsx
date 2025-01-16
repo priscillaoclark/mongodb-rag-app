@@ -1,4 +1,3 @@
-
 import React from "react";
 import NavBar from "./component/navbar";
 
@@ -14,7 +13,7 @@ const Home = () => {
 
         <section className="mb-12 p-6 bg-gray-800/50 rounded-lg backdrop-blur-sm">
           <h2 className="text-3xl font-bold mb-4 text-blue-400">
-            10 Million Children in the US Need a Tutor But Can't Afford One
+            10 Million Children in the US Need a Tutor But Can&apos;t Afford One
           </h2>
           <p className="text-xl text-gray-300">Zeno is here to change that.</p>
         </section>
@@ -46,7 +45,7 @@ const Home = () => {
             <li className="flex items-start">
               <span className="mr-2 text-blue-400">•</span>
               <div>
-                <strong className="text-blue-400">Ethical Learning:</strong> Zeno doesn't do homework for
+                <strong className="text-blue-400">Ethical Learning:</strong> Zeno doesn&apos;t do homework for
                 students. Instead, it coaches them, building critical thinking and
                 problem-solving skills.
               </div>
@@ -85,11 +84,11 @@ const Home = () => {
           <ul className="space-y-2 mb-6 text-gray-300">
             <li className="flex items-center">
               <span className="mr-2 text-blue-400">•</span>
-              <strong>Doesn't encourage cheating</strong>
+              <strong>Doesn&apos;t encourage cheating</strong>
             </li>
             <li className="flex items-center">
               <span className="mr-2 text-blue-400">•</span>
-              <strong>Knows what's happening in the classroom</strong>
+              <strong>Knows what&apos;s happening in the classroom</strong>
             </li>
             <li className="flex items-center">
               <span className="mr-2 text-blue-400">•</span>
@@ -97,7 +96,7 @@ const Home = () => {
             </li>
           </ul>
           <p className="text-gray-300">
-            Best of all, Zeno is <strong className="text-blue-400">free</strong> and easy to use—no
+            Best of all, Zeno is <strong className="text-blue-400">free</strong> and easy to use&mdash;no
             changes required to how teachers teach or manage their classrooms.
           </p>
         </section>
