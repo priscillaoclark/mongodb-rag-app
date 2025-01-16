@@ -47,12 +47,14 @@ export async function POST(req: Request) {
                 }),
             },
         );
-        const response = await conversationChain.invoke({
+        await conversationChain.call({
             question: question,
             chat_history: messages.slice(1).map(m => ({
                 type: m.role === 'user' ? 'human' : 'ai',
                 content: m.content
             }))
+        }, {
+            callbacks: [handlers]
         });
 
         return new StreamingTextResponse(stream);
