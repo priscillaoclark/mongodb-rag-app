@@ -1,9 +1,9 @@
-import { ChatOpenAI } from "langchain/chat_models/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { BufferMemory } from "langchain/memory";
 import { StreamingTextResponse, LangChainStream } from "ai";
 import { NextRequest, NextResponse } from "next/server";
-import * as hub from "langchain/hub";
+import { ChatPromptTemplate } from "langchain/prompts";
 
 // Define the structure of incoming messages
 interface Message {
@@ -25,11 +25,8 @@ export async function POST(
         const messages: Message[] = body.messages ?? [];
         const question: string = messages[messages.length - 1]?.content ?? "";
 
-        // Pull the system prompt from LangChain's PromptHub
-        const prompt = await hub.pull("zeno-demo"); // Replace with your actual prompt name
-
-        // Extract prompt content
-        const systemPrompt: string = prompt.prompt;
+        const systemPrompt = "You are Zeno, an AI tutor focused on helping students learn effectively while maintaining academic integrity.";
+        const prompt = ChatPromptTemplate.fromTemplate(systemPrompt);
 
         // Initialize the ChatOpenAI model
         const model = new ChatOpenAI({
