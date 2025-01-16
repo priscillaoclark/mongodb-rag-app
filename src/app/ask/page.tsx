@@ -39,9 +39,9 @@ export default function Home() {
           </div>
         )}
         {messages.length === 0 && (
-          <div className="flex items-center justify-center p-8 rounded-lg mb-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-sm transition-all duration-300">
+          <div className="flex items-center justify-center p-8 rounded-lg mb-4 backdrop-blur-sm transition-all duration-300">
             <div className="text-gray-300 text-center">
-              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">Welcome to Zeno</h2>
+              <h2 className="text-3xl font-bold mb-4 text-blue-600 ">Welcome to Zeno</h2>
               <p className="text-lg text-gray-400">Your AI Algebra Tutor</p>
               <p className="mt-4 text-sm text-gray-500">Ask me anything about your math problems!</p>
             </div>
@@ -67,7 +67,7 @@ export default function Home() {
               </span>
               <div className="flex-1">
                 <p className="leading-relaxed px-4 py-3 rounded-lg bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm text-gray-200 shadow-lg">
-                  <span className="block font-bold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                  <span className="block font-bold mb-1 text-transparent bg-blue-700">
                     {m.role === "assistant" ? "Zeno" : "You"}
                   </span>
                   {m.content}
@@ -91,7 +91,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={waitingForAI}
-              className="inline-flex items-center justify-center rounded-lg text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 h-12 px-6 py-2 transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-blue-500/50"
+              className="inline-flex items-center justify-center rounded-lg text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 bg-blue-700 hover:bg-blue-500"
             >
               Send
             </button>
