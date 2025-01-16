@@ -14,10 +14,14 @@ export async function POST(req: Request) {
         const messages: Message[] = body.messages ?? [];
         const question = messages[messages.length - 1].content;
 
+        const systemPrompt = "You are a helpful AI assistant that answers questions based on the provided context.";
+        
         const model = new ChatOpenAI({
             temperature: 0.8,
             streaming: true,
             callbacks: [handlers],
+        }).bind({
+            systemMessage: systemPrompt
         });
 
         const retriever = vectorStore().asRetriever({ 
