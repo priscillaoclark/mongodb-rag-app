@@ -4,14 +4,14 @@ import Image from "next/image";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
       <div className="relative">
         <div
           className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-20"
           style={{ height: "100vh" }}
         ></div>
-        <div className="relative max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
+        <div className="relative px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
           <header className="text-center mb-16">
             <h1 className="text-6xl font-bold mt-6 mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
               Welcome to Zeno
