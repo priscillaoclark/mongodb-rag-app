@@ -6,32 +6,32 @@ import { cn } from "@/lib/utils"
 
 const NavBar = () => {
   return (
-    <div className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container flex h-14 items-center">
+    <div className="fixed top-0 z-50 w-full border-b border-gray-800 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
+      <nav className="container flex h-16 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <img src="/logo.png" alt="Logo" className="h-6 w-6" />
-            <span className="hidden font-bold sm:inline-block">
+            <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+            <span className="hidden font-bold text-xl bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text sm:inline-block">
               Zeno
             </span>
           </Link>
         </div>
-        <div className="flex gap-6 md:gap-10">
+        <div className="flex gap-8 md:gap-12">
           <Link
             href="/"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
           >
             Home
           </Link>
           <Link
             href="/ask"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
           >
             QnA
           </Link>
           <Link
             href="/teach"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
           >
             Train
           </Link>
