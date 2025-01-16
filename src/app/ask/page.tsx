@@ -18,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 via-red-900 to-yellow-900">
       <NavBar />
       <div
         className="px-4 py-16 sm:px-6 lg:px-8 transition-all duration-300"
@@ -41,7 +41,7 @@ export default function Home() {
         {messages.length === 0 && (
           <div className="flex items-center justify-center p-8 rounded-lg mb-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-sm transition-all duration-300">
             <div className="text-gray-300 text-center">
-              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">Welcome to Zeno</h2>
+              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500 text-transparent bg-clip-text">Welcome to Zeno</h2>
               <p className="text-lg text-gray-400">Your AI Algebra Tutor</p>
               <p className="mt-4 text-sm text-gray-500">Ask me anything about your math problems!</p>
             </div>
@@ -79,7 +79,7 @@ export default function Home() {
 
         <div className="flex items-center pt-0 chat-window">
           <form
-            className="flex items-center justify-center w-full space-x-2 backdrop-blur-sm bg-gradient-to-r from-blue-900/10 to-purple-900/10 p-4 rounded-lg"
+            className="flex items-center justify-center w-full space-x-2 backdrop-blur-sm bg-gradient-to-r from-red-900/10 via-blue-900/10 to-yellow-900/10 p-4 rounded-lg"
             onSubmit={handleFormSubmit}
           >
             <input
@@ -91,7 +91,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={waitingForAI}
-              className="inline-flex items-center justify-center rounded-lg text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 h-12 px-6 py-2 transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-blue-500/50"
+              className="inline-flex items-center justify-center rounded-lg text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-red-600 via-blue-600 to-yellow-600 hover:from-red-500 hover:via-blue-500 hover:to-yellow-500 h-12 px-6 py-2 transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-blue-500/50"
             >
               Send
             </button>
