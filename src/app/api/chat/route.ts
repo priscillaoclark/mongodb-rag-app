@@ -18,10 +18,7 @@ export async function POST(req: Request) {
             callbacks: [handlers],
         });
 
-        const retriever = vectorStore().asRetriever({
-            searchType: "similarity",
-            searchKwargs: { k: 4 },
-        });
+        const retriever = vectorStore().asRetriever();
 
         const chain = ConversationalRetrievalQAChain.fromLLM(
             model,
