@@ -1,0 +1,46 @@
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ Compiled / in 2.1s (519 modules)
+ ✓ Compiled in 1338ms (263 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 3s (510 modules)
+ ✓ Compiled in 1242ms (524 modules)
+ ✓ Compiled in 453ms (524 modules)
+ ✓ Compiled in 308ms (524 modules)
+ ✓ Compiled in 322ms (524 modules)
+ ✓ Compiled in 254ms (524 modules)
+ ✓ Compiled in 320ms (524 modules)
+ ✓ Compiled in 240ms (524 modules)
+ ✓ Compiled /ask in 373ms (528 modules)
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 1095ms (1122 modules)
+[WARN]: You have enabled LangSmith tracing without backgrounding callbacks.
+[WARN]: If you are not using a serverless environment where you must wait for tracing calls to finish,
+[WARN]: we suggest setting "process.env.LANGCHAIN_CALLBACKS_BACKGROUND=true" to avoid additional latency.
+[WARNING]: Importing from "langchain/prompts" is deprecated.
+
+Instead, please import from "@langchain/core/prompts".
+
+This will be mandatory after the next "langchain" minor version bump to 0.2.
+Error: ReferenceError: vectorStore is not defined
+    at POST (webpack-internal:///(rsc)/./src/app/api/chat/route.ts:42:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1333:42)
+    at async cacheEntry.responseCache.get.routeKind (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/runner/workspace/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:807:17)
+    at async /home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/home/runner/workspace/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/home/runner/workspace/node_modules/next/dist/server/lib/start-server.js:140:13)

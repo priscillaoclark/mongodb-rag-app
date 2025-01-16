@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-800">
       <NavBar />
       <div className="relative">
         <div
@@ -41,7 +41,7 @@ const Home = () => {
             </p>
           </section>
 
-          <section className="mb-6 p-6 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+          <section className="mb-6 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">Meet Zeno</h2>
             <p className="mb-6 text-gray-300">
               Zeno is the first{" "}
@@ -83,7 +83,7 @@ const Home = () => {
             </ul>
           </section>
 
-          <section className="mb-6 p-6 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+          <section className="mb-6 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">
               How Zeno Works
             </h2>
@@ -114,7 +114,7 @@ const Home = () => {
             </ol>
           </section>
 
-          <section className="mb-12 p-6 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+          <section className="mb-12 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">Why Zeno?</h2>
             <p className="mb-4 text-gray-300">Unlike other AI tools, Zeno:</p>
             <ul className="space-y-2 mb-6 text-gray-300">
