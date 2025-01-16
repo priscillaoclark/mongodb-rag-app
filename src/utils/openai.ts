@@ -42,7 +42,14 @@ export function getEmbeddingsTransformer(): OpenAIEmbeddings {
 export function vectorStore(): MongoDBAtlasVectorSearch {
     const vectorStore: MongoDBAtlasVectorSearch = new MongoDBAtlasVectorSearch(
         new OpenAIEmbeddings(),
-        searchArgs()
+        {
+            ...searchArgs(),
+            searchType: "similarity",
+            searchKwargs: { 
+                k: 3,
+                score_threshold: 0.7
+            }
+        }
     );
     return vectorStore
 }
