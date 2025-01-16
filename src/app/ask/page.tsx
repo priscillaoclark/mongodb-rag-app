@@ -53,7 +53,7 @@ export default function Home() {
                 </div>
               </span>
               <p className="leading-relaxed" style={{ color: "aliceblue" }}>
-                <span className="block font-bold">{m.role}</span>
+                <span className="block font-bold">{m.role === 'assistant' ? 'Zeno' : 'You'}</span>
                 {m.content}
               </p>
             </div>
