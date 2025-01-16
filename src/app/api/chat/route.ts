@@ -47,9 +47,15 @@ export async function POST(req: Request) {
                 }),
             },
         );
-        conversationChain.invoke({
+        const response = await conversationChain.call({
             question: question,
+            chat_history: [],
         });
+
+        // Write the response to the stream
+        const writer = stream.getWriter();
+        await writer.write(new TextEncoder().encode(response.text));
+        await writer.close();
 
         return new StreamingTextResponse(stream);
     } catch (e) {
