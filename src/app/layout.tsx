@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Zeno - Your Algebra Tutor",
+  title: "Zeno Tutor",
   description: "Your personal AI algebra tutor powered by OpenAI"
 };
 
