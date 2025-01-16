@@ -11,11 +11,10 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
-      <div
+      <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8"
         style={{height: '70vh', flexDirection: "column-reverse", display: "flex" }}
-        
       >
         <>
           {waitingForAI &&
