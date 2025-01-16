@@ -8,12 +8,12 @@ const Home = () => {
       <NavBar />
       <div className="relative">
         <div
-          className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-20"
-          style={{ height: "100vh" }}
+          className="absolute inset-0 w-screen bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-20"
+          style={{ height: "100vh", minWidth: "100vw" }}
         ></div>
         <div className="relative px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
-          <div className="relative py-20 px-4">
-            <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-20 z-0"></div>
+          <div className="relative py-20 px-4 w-full">
+            <div className="absolute inset-0 w-screen bg-[url('/background.jpg')] bg-cover bg-center opacity-20 z-0" style={{ minWidth: "100vw", left: "50%", transform: "translateX(-50%)" }}></div>
             <div className="relative z-10">
               <header className="text-center mb-16">
                 <h1 className="text-6xl font-bold mt-6 mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
