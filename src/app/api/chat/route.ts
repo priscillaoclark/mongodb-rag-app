@@ -11,14 +11,12 @@ import {
     ChatPromptTemplate,
     MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { BaseMessage } from "@langchain/core/messages";
+import { BaseMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 
 dotenv.config();
 
-// Initialize LangSmith tracing
 const tracer = new LangChainTracer({ projectName: "demo" });
-// Initialize MongoDB Atlas Vector Search for RAG
 const retriever = vectorStore().asRetriever();
 
 export async function POST(req: Request) {
@@ -26,7 +24,14 @@ export async function POST(req: Request) {
         const { handlers } = LangChainStream();
         const body = await req.json();
         const messages: Message[] = body.messages ?? [];
-        const question = messages[messages.length - 1].content;
+        const currentMessageContent = messages[messages.length - 1].content;
+
+        // Convert the chat history to LangChain format
+        const chatHistory: BaseMessage[] = messages.slice(0, -1).map((m) => 
+            m.role === "user" 
+                ? new HumanMessage(m.content)
+                : new AIMessage(m.content)
+        );
 
         const llm = new ChatOpenAI({
             temperature: 0.8,
@@ -34,15 +39,8 @@ export async function POST(req: Request) {
             callbacks: [handlers, tracer],
         });
 
-        // Contextualize question
-        const contextualizeQSystemPrompt = `
-        Given a chat history and the latest user question
-        which might reference context in the chat history,
-        formulate a standalone question which can be understood
-        without the chat history. Do NOT answer the question,            just reformulate it if needed and otherwise return it as is.`;
-
         const contextualizeQPrompt = ChatPromptTemplate.fromMessages([
-            ["system", contextualizeQSystemPrompt],
+            ["system", "Given a chat history and the latest user question, formulate a standalone question which can be understood without the chat history. Do NOT answer the question, just reformulate it if needed and otherwise return it as is."],
             new MessagesPlaceholder("chat_history"),
             ["human", "{input}"],
         ]);
@@ -53,24 +51,12 @@ export async function POST(req: Request) {
             rephrasePrompt: contextualizeQPrompt,
         });
 
-        // Answer question
-        const qaSystemPrompt = `
-        You are an assistant for question-answering tasks. Use
-        the following pieces of retrieved context to answer the
-        question. If you don't know the answer, just say that you
-        don't know.
-        \n\n
-        {context}`;
-
         const qaPrompt = ChatPromptTemplate.fromMessages([
-            ["system", qaSystemPrompt],
+            ["system", "You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know.\n\n{context}"],
             new MessagesPlaceholder("chat_history"),
             ["human", "{input}"],
         ]);
 
-        // Below we use createStuffDocuments_chain to feed all retrieved context
-        // into the LLM. Note that we can also use StuffDocumentsChain and other
-        // instances of BaseCombineDocumentsChain.
         const questionAnswerChain = await createStuffDocumentsChain({
             llm,
             prompt: qaPrompt,
@@ -81,15 +67,14 @@ export async function POST(req: Request) {
             combineDocsChain: questionAnswerChain,
         });
 
-        // Usage:
-        const chat_history: BaseMessage[] = [];
         const response = await ragChain.invoke({
-            chat_history,
-            input: question,
+            chat_history: chatHistory,
+            input: currentMessageContent,
         });
-        return NextResponse.json({ response }); // Return the response
+
+        return NextResponse.json({ response });
     } catch (error) {
-        console.error(error); // Handle any errors that occur
+        console.error(error);
         return NextResponse.json({ error: "An error occurred." });
     }
 }
