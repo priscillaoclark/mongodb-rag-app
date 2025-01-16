@@ -4,11 +4,11 @@ import NavBar from "./component/navbar";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
       <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
         <header className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">Welcome to Zeno</h1>
+          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500 text-transparent bg-clip-text animate-gradient">Welcome to Zeno</h1>
           <p className="text-xl text-gray-300">Your Free, Personalized AI Tutor for Students and Teachers</p>
         </header>
 
