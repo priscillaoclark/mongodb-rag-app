@@ -61,7 +61,11 @@ A reminder: This is a dialogue so only ask one question at a time and always wai
             temperature: 0.8,
             streaming: true,
             callbacks: [handlers],
-            systemMessage: systemPrompt,
+        }).bind({
+            systemMessages: [{
+                role: "system",
+                content: systemPrompt
+            }]
         });
 
         const retriever = vectorStore().asRetriever({
