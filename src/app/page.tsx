@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
+    <div className="min-h-screen bg-black">
       <NavBar />
       <div className="relative">
         <div
@@ -13,10 +13,17 @@ const Home = () => {
         ></div>
         <div className="relative px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
           <div className="relative py-20 px-4 w-full">
-            <div className="absolute inset-0 w-screen bg-[url('/background.jpg')] bg-cover bg-center opacity-20 z-0" style={{ minWidth: "100vw", left: "50%", transform: "translateX(-50%)" }}></div>
+            <div
+              className="absolute inset-0 w-screen bg-[url('/background.jpg')] bg-cover bg-center opacity-20 z-0"
+              style={{
+                minWidth: "100vw",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            ></div>
             <div className="relative z-10">
               <header className="text-center mb-16">
-                <h1 className="text-6xl font-bold mt-6 mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
+                <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-red-500 via-blue-700 to-yellow-300 text-transparent bg-clip-text animate-gradient">
                   Welcome to Zeno
                 </h1>
                 <p className="text-xl text-gray-300">
@@ -46,7 +53,7 @@ const Home = () => {
             </div>
           </div>
 
-          <section className="mb-6 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
+          <section className="mb-6 mt-6 p-6 bg-neutral-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">Meet Zeno</h2>
             <p className="mb-6 text-gray-300">
               Zeno is the first{" "}
@@ -88,7 +95,7 @@ const Home = () => {
             </ul>
           </section>
 
-          <section className="mb-6 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
+          <section className="mb-6 p-6 bg-neutral-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">
               How Zeno Works
             </h2>
@@ -119,7 +126,7 @@ const Home = () => {
             </ol>
           </section>
 
-          <section className="mb-12 p-6 bg-gray-900 rounded-lg backdrop-blur-sm">
+          <section className="mb-12 p-6 bg-neutral-900 rounded-lg backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-4 text-red-500">Why Zeno?</h2>
             <p className="mb-4 text-gray-300">Unlike other AI tools, Zeno:</p>
             <ul className="space-y-2 mb-6 text-gray-300">
