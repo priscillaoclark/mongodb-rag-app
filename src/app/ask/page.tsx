@@ -6,7 +6,7 @@ import { useState } from "react";
 import NavBar from "../component/navbar";
 
 export default function Home() {
-  const [waitingForAI, setWaitingForAI] = useState<Boolean>(false);
+  const [waitingForAI, setWaitingForAI] = useState<boolean>(false);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onResponse: () => setWaitingForAI(false),
     onFinish: () => setWaitingForAI(false),
