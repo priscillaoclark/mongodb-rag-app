@@ -1,0 +1,110 @@
+ ✓ Compiled /not-found in 586ms (1196 modules)
+[chain/start] [1:chain:ConversationalRetrievalQAChain] Entering Chain run with input: {
+  "question": "how do i Solve Equations Using the Subtraction and Addition Properties of Equality?",
+  "chat_history": []
+}
+[retriever/start] [1:chain:ConversationalRetrievalQAChain > 2:retriever:VectorStoreRetriever] Entering Retriever run with input: {
+  "query": "how do i Solve Equations Using the Subtraction and Addition Properties of Equality?"
+}
+[retriever/end] [1:chain:ConversationalRetrievalQAChain > 2:retriever:VectorStoreRetriever] [465ms] Exiting Retriever run with output: {
+  "documents": []
+}
+[chain/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain] Entering Chain run with input: {
+  "question": "how do i Solve Equations Using the Subtraction and Addition Properties of Equality?",
+  "input_documents": [],
+  "chat_history": ""
+}
+[chain/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain] Entering Chain run with input: {
+  "question": "how do i Solve Equations Using the Subtraction and Addition Properties of Equality?",
+  "chat_history": "",
+  "context": ""
+}
+[llm/start] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain > 5:llm:ChatOpenAI] Entering LLM run with input: {
+  "messages": [
+    [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "Use the following pieces of context to answer the users question. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.\n----------------\n",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how do i Solve Equations Using the Subtraction and Addition Properties of Equality?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  ]
+}
+[llm/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain > 5:llm:ChatOpenAI] [2.02s] Exiting LLM run with output: {
+  "generations": [
+    [
+      {
+        "text": "To solve equations using the Subtraction and Addition Properties of Equality, you can follow these steps:\n\n1. Start by simplifying both sides of the equation by using the Addition or Subtraction Property of Equality to isolate the variable on one side of the equation.\n2. Add or subtract the same number from both sides of the equation to keep it balanced.\n3. Continue simplifying until you have the variable isolated on one side and a number on the other side.\n4. Solve for the variable by performing the necessary operations.\n\nIf you have a specific equation you need help with, feel free to provide it for further assistance.",
+        "generationInfo": {
+          "prompt": 0,
+          "completion": 0
+        },
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "To solve equations using the Subtraction and Addition Properties of Equality, you can follow these steps:\n\n1. Start by simplifying both sides of the equation by using the Addition or Subtraction Property of Equality to isolate the variable on one side of the equation.\n2. Add or subtract the same number from both sides of the equation to keep it balanced.\n3. Continue simplifying until you have the variable isolated on one side and a number on the other side.\n4. Solve for the variable by performing the necessary operations.\n\nIf you have a specific equation you need help with, feel free to provide it for further assistance.",
+            "additional_kwargs": {},
+            "response_metadata": {
+              "estimatedTokenUsage": {
+                "promptTokens": 67,
+                "completionTokens": 124,
+                "totalTokens": 191
+              },
+              "prompt": 0,
+              "completion": 0
+            },
+            "tool_call_chunks": [],
+            "tool_calls": [],
+            "invalid_tool_calls": []
+          }
+        }
+      }
+    ]
+  ],
+  "llmOutput": {
+    "estimatedTokenUsage": {
+      "promptTokens": 67,
+      "completionTokens": 124,
+      "totalTokens": 191
+    }
+  }
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain > 4:chain:LLMChain] [2.03s] Exiting Chain run with output: {
+  "text": "To solve equations using the Subtraction and Addition Properties of Equality, you can follow these steps:\n\n1. Start by simplifying both sides of the equation by using the Addition or Subtraction Property of Equality to isolate the variable on one side of the equation.\n2. Add or subtract the same number from both sides of the equation to keep it balanced.\n3. Continue simplifying until you have the variable isolated on one side and a number on the other side.\n4. Solve for the variable by performing the necessary operations.\n\nIf you have a specific equation you need help with, feel free to provide it for further assistance."
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain > 3:chain:StuffDocumentsChain] [2.03s] Exiting Chain run with output: {
+  "text": "To solve equations using the Subtraction and Addition Properties of Equality, you can follow these steps:\n\n1. Start by simplifying both sides of the equation by using the Addition or Subtraction Property of Equality to isolate the variable on one side of the equation.\n2. Add or subtract the same number from both sides of the equation to keep it balanced.\n3. Continue simplifying until you have the variable isolated on one side and a number on the other side.\n4. Solve for the variable by performing the necessary operations.\n\nIf you have a specific equation you need help with, feel free to provide it for further assistance."
+}
+[chain/end] [1:chain:ConversationalRetrievalQAChain] [2.50s] Exiting Chain run with output: {
+  "text": "To solve equations using the Subtraction and Addition Properties of Equality, you can follow these steps:\n\n1. Start by simplifying both sides of the equation by using the Addition or Subtraction Property of Equality to isolate the variable on one side of the equation.\n2. Add or subtract the same number from both sides of the equation to keep it balanced.\n3. Continue simplifying until you have the variable isolated on one side and a number on the other side.\n4. Solve for the variable by performing the necessary operations.\n\nIf you have a specific equation you need help with, feel free to provide it for further assistance.",
+  "sourceDocuments": []
+}
