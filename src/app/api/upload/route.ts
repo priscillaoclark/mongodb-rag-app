@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
                 // Create metadata for chunks
                 const chunksWithMetadata = chunks.map((chunk, index) => ({
                     text: chunk,
+                    pageContent: chunk, // Required by LangChain Document interface
                     metadata: {
                         filename: uploadedFile.name,
                         uploadTime: new Date().toISOString(),
