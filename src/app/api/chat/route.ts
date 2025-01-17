@@ -119,23 +119,22 @@ export async function POST(req: Request): Promise<Response> {
         return new StreamingTextResponse(combinedStream);
     } catch (error: unknown) {
         console.error("Error in chat processing:", error);
+        
+        const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+        console.error("Detailed error:", errorMessage);
 
-        if (error instanceof Error) {
-            return NextResponse.json(
-                {
-                    message: "Error Processing",
-                    error: error.message,
-                },
-                { status: 500 },
-            );
-        }
-
-        return NextResponse.json(
+        return new Response(
+            JSON.stringify({
+                message: "Error Processing",
+                error: errorMessage,
+                timestamp: new Date().toISOString()
+            }), 
             {
-                message: "Unknown Error",
-                error: "An unexpected error occurred",
-            },
-            { status: 500 },
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
         );
     }
 }
