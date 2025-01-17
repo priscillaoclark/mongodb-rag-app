@@ -36,9 +36,12 @@ export async function POST(req: Request) {
                 returnSourceDocuments: true,
             },
         );
-        await conversationChain.call({
+        const response = await conversationChain.call({
             question: question,
         });
+
+        // Log source documents
+        console.log('Retrieved documents:', response.sourceDocuments);
 
         return new StreamingTextResponse(stream);
     } catch (e) {
