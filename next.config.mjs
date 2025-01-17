@@ -2,7 +2,13 @@
 const nextConfig = {
     experimental: {
       serverComponentsExternalPackages: ["pdf-parse"],
-      },    
+    },
+    api: {
+      bodyParser: {
+        sizeLimit: '75mb',
+      },
+      responseLimit: '75mb',
+    },
 };
 
 export default nextConfig;
