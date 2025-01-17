@@ -16,19 +16,40 @@ let collectionInstance: Collection | null = null;
 // Initialize MongoDB connection
 async function initMongoDB() {
     try {
-        if (!clientInstance) {
-            clientInstance = new MongoClient(process.env.MONGODB_URI!);
-            await clientInstance.connect();
+        if (!process.env.MONGODB_URI) {
+            throw new Error("MONGODB_URI environment variable is not set");
+        }
 
+        if (!clientInstance) {
+            console.log("Initializing new MongoDB connection...");
+            clientInstance = new MongoClient(process.env.MONGODB_URI);
+            await clientInstance.connect();
+            console.log("MongoDB connected successfully");
+        }
+
+        if (!collectionInstance) {
             const namespace = "textbooks.uploads";
             const [dbName, collectionName] = namespace.split(".");
-            collectionInstance = clientInstance
-                .db(dbName)
-                .collection(collectionName);
+            
+            const db = clientInstance.db(dbName);
+            const collections = await db.listCollections().toArray();
+            const collectionExists = collections.some(col => col.name === collectionName);
+            
+            if (!collectionExists) {
+                console.log(`Creating collection ${collectionName}...`);
+                await db.createCollection(collectionName);
+            }
+            
+            collectionInstance = db.collection(collectionName);
+            console.log(`Collection ${collectionName} initialized`);
         }
+
         return collectionInstance;
     } catch (error: any) {
         console.error("MongoDB connection error:", error);
+        // Reset instances on error
+        clientInstance = null;
+        collectionInstance = null;
         throw new Error(
             `Failed to connect to MongoDB: ${error?.message || "Unknown error"}`,
         );
