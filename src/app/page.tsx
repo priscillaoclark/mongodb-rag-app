@@ -88,15 +88,15 @@ const Home = () => {
                 <strong>Student:</strong> Do problem 7 for me.
               </p>
               <p>
-                <strong>Zeno:</strong> Hi Kinjal! 😀 I’m here to help you in Mr.
-                Smith’s Algebra class! What are you working on?
+                <strong>Zeno:</strong> Hi Kinjal! 😀 I&apos;m here to help you in Mr.
+                Smith&apos;s Algebra class! What are you working on?
               </p>
               <p>
-                <strong>Student:</strong> It's multiplying binomials.
+                <strong>Student:</strong> It&apos;s multiplying binomials.
               </p>
               <p>
                 <strong>Zeno:</strong> Great! Have you heard of the FOIL method?
-                Let's apply it to Problem 7!
+                Let&apos;s apply it to Problem 7!
               </p>
             </div>
           </section>
@@ -119,7 +119,7 @@ const Home = () => {
               </li>
               <li>
                 <strong>Q3 2025:</strong> Full deployment in multiple schools
-                for one subject/grade.
+                for one subject&apos;grade.
               </li>
               <li>
                 <strong>2026:</strong> Expand to more subjects and grade levels.
@@ -168,7 +168,7 @@ const Home = () => {
               Join Us in Transforming Education
             </h2>
             <p className="mb-6 text-gray-100">
-              Help us raise $200K to fund Zeno's next phase. Every contribution
+              Help us raise $200K to fund Zeno&apos;s next phase. Every contribution
               brings us closer to empowering millions of students.
             </p>
             <a
