@@ -59,6 +59,7 @@ export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
         indexName: "vector_index",
         textKey: "text",
         embeddingKey: "text_embedding",
+        similarity: "cosine",
     };
     return searchArgs;
 }

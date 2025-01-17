@@ -20,8 +20,8 @@ export async function POST(req: Request) {
         });
 
         const retriever = vectorStore().asRetriever({
-            searchType: "mmr",
-            searchKwargs: { fetchK: 10, lambda: 0.25 },
+            searchType: "similarity",
+            k: 3,
         });
         const conversationChain = ConversationalRetrievalQAChain.fromLLM(
             model,
@@ -29,10 +29,14 @@ export async function POST(req: Request) {
             {
                 memory: new BufferMemory({
                     memoryKey: "chat_history",
+                    returnMessages: true,
+                    inputKey: "question",
+                    outputKey: "text",
                 }),
+                returnSourceDocuments: true,
             },
         );
-        conversationChain.invoke({
+        await conversationChain.call({
             question: question,
         });
 
