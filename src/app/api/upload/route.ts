@@ -3,7 +3,7 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
 import { PDFLoader } from "@langchain/community/document_loaders/web/pdf";
-import { RecursiveCharacterTextSplitter } from "@langchain/core/text_splitter";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 if (!process.env.PINECONE_API_KEY) {
   throw new Error("Missing PINECONE_API_KEY");
