@@ -28,6 +28,12 @@ const NavBar = () => {
           >
             Demo
           </Link>
+          <Link
+            href="/teach"
+            className="text-gray-300 transition-colors hover:text-blue-400 font-medium"
+          >
+            Upload
+          </Link>
         </div>
       </nav>
     </div>

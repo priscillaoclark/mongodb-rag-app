@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@redis/client";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
@@ -24,10 +23,7 @@ export async function POST(request: NextRequest) {
     const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json(
-        { error: "No file provided" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     // Convert file to buffer
@@ -43,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     // Split the documents into chunks
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 3000,
       chunkOverlap: 200,
     });
     const splitDocs = await textSplitter.splitDocuments(docs);
@@ -56,22 +52,21 @@ export async function POST(request: NextRequest) {
         redisClient: client,
         indexName: "documents",
         keyPrefix: "doc:",
-      }
+      },
     );
 
     // Clean up temp file
     require("fs").unlinkSync(tempPath);
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Document processed and stored in Redis" 
+    return NextResponse.json({
+      success: true,
+      message: "Document processed and stored in Redis",
     });
-
   } catch (error) {
     console.error("Error processing document:", error);
     return NextResponse.json(
       { error: "Failed to process document" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
