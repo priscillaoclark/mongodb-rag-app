@@ -27,17 +27,19 @@ try {
   await client.ft.create(
     'docs_index',
     {
-      embedding: {
+      '$.embedding': {
         type: 'VECTOR',
         ALGORITHM: 'HNSW',
         DIM: 1536,
         DISTANCE_METRIC: 'COSINE'
       },
-      text: {
-        type: 'TEXT'
+      '$.text': {
+        type: 'TEXT',
+        WEIGHT: 1.0
       },
-      metadata: {
-        type: 'TEXT'
+      '$.metadata': {
+        type: 'TEXT',
+        WEIGHT: 1.0
       }
     },
     {
