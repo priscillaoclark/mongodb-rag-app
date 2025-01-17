@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useChat } from "ai/react";
@@ -32,8 +31,14 @@ export default function Home() {
           <div className="flex items-center justify-center p-4 bg-blue-900/20 backdrop-blur-sm rounded-lg mb-4 transition-all duration-300 animate-pulse">
             <div className="text-blue-400 flex items-center gap-2">
               <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+              <div
+                className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                style={{ animationDelay: "0.4s" }}
+              ></div>
               <span className="ml-2">Zeno is thinking...</span>
             </div>
           </div>
@@ -41,9 +46,13 @@ export default function Home() {
         {messages.length === 0 && (
           <div className="flex items-center justify-center p-8 rounded-lg mb-4 backdrop-blur-sm transition-all duration-300">
             <div className="text-gray-300 text-center">
-              <h2 className="text-3xl font-bold mb-4 text-blue-600 ">Welcome to Zeno</h2>
+              <h2 className="text-3xl font-bold mb-4 text-blue-600 ">
+                Welcome to Zeno
+              </h2>
               <p className="text-lg text-gray-400">Your AI Algebra Tutor</p>
-              <p className="mt-4 text-sm text-gray-500">Ask me anything about your math problems!</p>
+              <p className="mt-4 text-sm text-gray-500">
+                Ask me anything about your math problems!
+              </p>
             </div>
           </div>
         )}
@@ -57,17 +66,29 @@ export default function Home() {
                 className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8 transition-transform hover:scale-110"
                 style={{ margin: "30px", marginTop: "0px" }}
               >
-                <div className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-1">
+                <div className="rounded-full bg-gradient-to-r from-blue-500 to-blue-800 p-1">
                   {m.role === "user" ? (
-                    <img src="/user.svg" alt="User" width={32} height={32} className="bg-white rounded-full p-1" />
+                    <img
+                      src="/user.svg"
+                      alt="User"
+                      width={32}
+                      height={32}
+                      className="bg-white rounded-full p-1"
+                    />
                   ) : (
-                    <img src="/bot.svg" alt="Bot" width={32} height={32} className="bg-white rounded-full p-1" />
+                    <img
+                      src="/logo.png"
+                      alt="Zeno"
+                      width={18}
+                      height={18}
+                      className="bg-white rounded-full p-1"
+                    />
                   )}
                 </div>
               </span>
               <div className="flex-1">
                 <p className="leading-relaxed px-4 py-3 rounded-lg bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm text-gray-200 shadow-lg">
-                  <span className="block font-bold mb-1 text-transparent bg-blue-700">
+                  <span className="block font-bold mb-1 text-white">
                     {m.role === "assistant" ? "Zeno" : "You"}
                   </span>
                   {m.content}
@@ -79,7 +100,7 @@ export default function Home() {
 
         <div className="flex items-center pt-0 chat-window">
           <form
-            className="flex items-center justify-center w-full space-x-2 backdrop-blur-sm bg-gradient-to-r from-blue-900/10 to-purple-900/10 p-4 rounded-lg"
+            className="flex items-center justify-center w-full space-x-2 backdrop-blur-sm bg-gradient-to-r from-blue-900/10 to-blue-500/10 p-4 rounded-lg"
             onSubmit={handleFormSubmit}
           >
             <input

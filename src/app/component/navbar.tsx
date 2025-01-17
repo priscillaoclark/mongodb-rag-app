@@ -10,7 +10,7 @@ const NavBar = () => {
         <div className="ml-4 mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <img src="/logo.png" alt="Logo" className="h-8 w-7" />
-            <span className="hidden font-bold text-xl bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text sm:inline-block">
+            <span className="font-bold text-xl text-black sm:inline-block">
               Zeno
             </span>
           </Link>
