@@ -19,6 +19,8 @@ const client = createClient({
 
 // Connect to Redis
 await client.connect();
+console.log('Redis connection status:', client.isOpen);
+console.log('Redis URL format (redacted):', process.env.REDIS_URL?.replace(/\/\/.*@/, '//***@'));
 
 // Create vector search index if it doesn't exist
 try {
