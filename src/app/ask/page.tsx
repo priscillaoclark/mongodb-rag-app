@@ -1,124 +1,146 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavBar from "../component/navbar";
+import { MessageSquare, Send, Loader2 } from "lucide-react";
 
 export default function Home() {
   const [waitingForAI, setWaitingForAI] = useState<boolean>(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onResponse: () => setWaitingForAI(false),
     onFinish: () => setWaitingForAI(false),
   });
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const handleFormSubmit = (e: React.FormEvent) => {
+    if (!input.trim()) return;
     setWaitingForAI(true);
     handleSubmit(e);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <NavBar />
-      <div
-        className="px-4 py-16 sm:px-6 lg:px-8 transition-all duration-300"
-        style={{
-          height: "70vh",
-          flexDirection: "column-reverse",
-          display: "flex",
-        }}
-      >
-        {waitingForAI && (
-          <div className="flex items-center justify-center p-4 bg-blue-900/20 backdrop-blur-sm rounded-lg mb-4 transition-all duration-300 animate-pulse">
-            <div className="text-blue-400 flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-              <div
-                className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
-                style={{ animationDelay: "0.2s" }}
-              ></div>
-              <div
-                className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
-                style={{ animationDelay: "0.4s" }}
-              ></div>
-              <span className="ml-2">Zeno is thinking...</span>
-            </div>
-          </div>
-        )}
+
+      <main className="flex-1 container mx-auto max-w-4xl px-4 pt-20 pb-24">
+        {" "}
+        {/* Added pt-20 for navbar spacing */}
+        {/* Welcome Message */}
         {messages.length === 0 && (
-          <div className="flex items-center justify-center p-8 rounded-lg mb-4 backdrop-blur-sm transition-all duration-300">
-            <div className="text-gray-300 text-center">
-              <h2 className="text-3xl font-bold mb-4 text-blue-600 ">
-                Welcome to Zeno
-              </h2>
-              <p className="text-lg text-gray-400">Your AI Algebra Tutor</p>
-              <p className="mt-4 text-sm text-gray-500">
-                Ask me anything about your math problems!
-              </p>
-            </div>
-          </div>
-        )}
-        <div className="pr-4 messages">
-          {messages.map((m) => (
-            <div
-              key={m.id}
-              className="flex gap-3 my-4 text-gray-600 text-sm flex-1 animate-fadeIn"
-            >
-              <span
-                className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8 transition-transform hover:scale-110"
-                style={{ margin: "30px", marginTop: "0px" }}
-              >
-                <div className="rounded-full bg-gradient-to-r from-blue-500 to-blue-800 p-1">
-                  {m.role === "user" ? (
-                    <img
-                      src="/user.svg"
-                      alt="User"
-                      width={32}
-                      height={32}
-                      className="bg-white rounded-full p-1"
-                    />
-                  ) : (
-                    <img
-                      src="/logo.png"
-                      alt="Zeno"
-                      width={18}
-                      height={18}
-                      className="bg-white rounded-full p-1"
-                    />
-                  )}
+          <div className="flex flex-col items-center justify-center space-y-8 min-h-[60vh]">
+            {" "}
+            {/* Changed h-[60vh] to min-h-[60vh] */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-900/20 to-blue-500/20 backdrop-blur-md shadow-xl">
+              <div className="text-center space-y-4">
+                <div className="inline-block p-3 rounded-full bg-blue-600/20 mb-4">
+                  <MessageSquare className="w-8 h-8 text-blue-400" />
                 </div>
-              </span>
-              <div className="flex-1">
-                <p className="leading-relaxed px-4 py-3 rounded-lg bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm text-gray-200 shadow-lg">
-                  <span className="block font-bold mb-1 text-white">
-                    {m.role === "assistant" ? "Zeno" : "You"}
-                  </span>
-                  {m.content}
+                <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                  Welcome to Zeno
+                </h2>
+                <p className="text-xl text-gray-300">Your AI Algebra Tutor</p>
+                <p className="text-gray-400 max-w-md mx-auto">
+                  I'm here to help you understand algebra concepts, solve
+                  equations, and master mathematical principles. Ask me
+                  anything!
                 </p>
               </div>
             </div>
-          ))}
-        </div>
-
-        <div className="flex items-center pt-0 chat-window">
-          <form
-            className="flex items-center justify-center w-full space-x-2 backdrop-blur-sm bg-gradient-to-r from-blue-900/10 to-blue-500/10 p-4 rounded-lg"
-            onSubmit={handleFormSubmit}
-          >
-            <input
-              value={input}
-              onChange={handleInputChange}
-              className="flex h-12 w-full rounded-lg border border-blue-500/30 bg-gray-900/50 px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:cursor-not-allowed disabled:opacity-50 text-gray-200 transition-all duration-300"
-              placeholder="Ask me anything about algebra..."
-            />
-            <button
-              type="submit"
-              disabled={waitingForAI}
-              className="inline-flex items-center justify-center rounded-lg text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 bg-blue-700 hover:bg-blue-500"
+          </div>
+        )}
+        {/* Messages Container */}
+        <div className="space-y-6 mb-8">
+          {" "}
+          {/* Reduced bottom margin */}
+          {messages.map((m) => (
+            <div
+              key={m.id}
+              className={`flex gap-4 ${
+                m.role === "assistant" ? "justify-start" : "justify-end"
+              }`}
             >
-              Send
-            </button>
-          </form>
+              {m.role === "assistant" && (
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 p-1 flex-shrink-0">
+                  <img
+                    src="/logo.png"
+                    alt="Zeno"
+                    className="w-full h-full rounded-full bg-white p-1"
+                  />
+                </div>
+              )}
+              <div
+                className={`flex max-w-[80%] ${m.role === "user" ? "flex-row-reverse" : ""}`}
+              >
+                <div
+                  className={`px-4 py-3 rounded-2xl shadow-lg ${
+                    m.role === "assistant"
+                      ? "bg-gradient-to-r from-gray-800/90 to-gray-900/90 text-gray-200"
+                      : "bg-gradient-to-r from-blue-600 to-blue-700 text-white"
+                  }`}
+                >
+                  <div className="prose prose-invert">
+                    <p className="whitespace-pre-wrap">{m.content}</p>
+                  </div>
+                </div>
+              </div>
+              {m.role === "user" && (
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 p-1 flex-shrink-0">
+                  <img
+                    src="/user.svg"
+                    alt="User"
+                    className="w-full h-full rounded-full bg-white p-1"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
         </div>
-      </div>
+        {/* Thinking Indicator */}
+        {waitingForAI && (
+          <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-900/40 backdrop-blur-sm text-blue-400">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span className="text-sm">Zeno is thinking...</span>
+            </div>
+          </div>
+        )}
+        {/* Input Form */}
+        <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-10">
+          {" "}
+          {/* Added z-10 */}
+          <div className="container mx-auto max-w-4xl">
+            <form
+              onSubmit={handleFormSubmit}
+              className="flex items-center gap-2 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-2 shadow-xl ring-1 ring-gray-800"
+            >
+              <input
+                value={input}
+                onChange={handleInputChange}
+                placeholder="Ask me anything about algebra..."
+                className="flex-1 bg-transparent px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none"
+                disabled={waitingForAI}
+              />
+              <button
+                type="submit"
+                disabled={waitingForAI || !input.trim()}
+                className="p-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:hover:bg-blue-600 transition-colors"
+              >
+                <Send className="w-5 h-5 text-white" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

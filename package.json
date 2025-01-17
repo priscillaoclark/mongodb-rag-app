@@ -23,6 +23,7 @@
     "filepond": "^4.30.6",
     "langchain": "^0.3.11",
     "langsmith": "^0.2.15",
+    "lucide-react": "^0.473.0",
     "mongodb": "5.2.0",
     "next": "14.1.0",
     "openai": "^4.78.1",

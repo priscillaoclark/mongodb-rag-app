@@ -3,62 +3,73 @@ import {
     MongoDBAtlasVectorSearch,
     MongoDBAtlasVectorSearchLibArgs,
 } from "@langchain/community/vectorstores/mongodb_atlas";
-
-import { MongoClient } from "mongodb";
+import { MongoClient, Collection } from "mongodb";
 import dotenv from "dotenv";
+
 dotenv.config();
 
+// Singleton instances
 let embeddingsInstance: OpenAIEmbeddings | null = null;
+let clientInstance: MongoClient | null = null;
+let collectionInstance: Collection | null = null;
 
-const client = new MongoClient(process.env.MONGODB_URI!);
-const namespace = "textbooks.uploads";
-const [dbName, collectionName] = namespace.split(".");
-// const dbName = process.env.DB_NAME!;
-// const collectionName = process.env.COLL_NAME!;
-const collection = client.db(dbName).collection(collectionName);
-
-export function getEmbeddingsTransformer(): OpenAIEmbeddings {
+// Initialize MongoDB connection
+async function initMongoDB() {
     try {
-        // Ensure embeddingsInstance is initialized only once for efficiency
-        if (!embeddingsInstance) {
-            embeddingsInstance = new OpenAIEmbeddings();
+        if (!clientInstance) {
+            clientInstance = new MongoClient(process.env.MONGODB_URI!);
+            await clientInstance.connect();
+
+            const namespace = "textbooks.uploads";
+            const [dbName, collectionName] = namespace.split(".");
+            collectionInstance = clientInstance
+                .db(dbName)
+                .collection(collectionName);
         }
-
-        return embeddingsInstance;
-    } catch (error) {
-        // Handle errors gracefully, providing informative messages and potential mitigation strategies
-        console.error("Error creating OpenAIEmbeddings instance:", error);
-
-        // Consider retrying based on error type or implementing exponential backoff for robustness
-        // Log details about the error and retry attempt for debugging purposes
-        console.error("Retrying creation of OpenAIEmbeddings...");
-        embeddingsInstance = new OpenAIEmbeddings(); // Attempt retry
-
-        // If multiple retries fail, provide a clear fallback mechanism or throw a more specific error
-        if (!embeddingsInstance) {
-            throw new Error(
-                "Failed to create OpenAIEmbeddings instance after retries. Check the logs for details.",
-            );
-        }
-
-        return embeddingsInstance; // Return the successfully created instance after retries
+        return collectionInstance;
+    } catch (error: any) {
+        console.error("MongoDB connection error:", error);
+        throw new Error(
+            `Failed to connect to MongoDB: ${error?.message || "Unknown error"}`,
+        );
     }
 }
 
-export function vectorStore(): MongoDBAtlasVectorSearch {
-    const vectorStore: MongoDBAtlasVectorSearch = new MongoDBAtlasVectorSearch(
-        new OpenAIEmbeddings(),
-        searchArgs(),
-    );
-    return vectorStore;
+export function getEmbeddingsTransformer(): OpenAIEmbeddings {
+    if (!embeddingsInstance) {
+        embeddingsInstance = new OpenAIEmbeddings({
+            openAIApiKey: process.env.OPENAI_API_KEY,
+            modelName: "text-embedding-ada-002",
+        });
+    }
+    return embeddingsInstance;
 }
 
-export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
-    const searchArgs: MongoDBAtlasVectorSearchLibArgs = {
+export async function searchArgs(): Promise<MongoDBAtlasVectorSearchLibArgs> {
+    const collection = await initMongoDB();
+    if (!collection) {
+        throw new Error("MongoDB collection not initialized");
+    }
+
+    return {
         collection,
         indexName: "vector_index",
         textKey: "text",
         embeddingKey: "text_embedding",
     };
-    return searchArgs;
+}
+
+export async function vectorStore(): Promise<MongoDBAtlasVectorSearch> {
+    const args = await searchArgs();
+    return new MongoDBAtlasVectorSearch(getEmbeddingsTransformer(), args);
+}
+
+// Cleanup function
+export async function cleanup(): Promise<void> {
+    if (clientInstance) {
+        await clientInstance.close();
+        clientInstance = null;
+        collectionInstance = null;
+    }
+    embeddingsInstance = null;
 }

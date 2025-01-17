@@ -1,73 +1,143 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import pdf from "pdf-parse";
-
 import { getEmbeddingsTransformer, searchArgs } from "@/utils/openai";
 import { MongoDBAtlasVectorSearch } from "@langchain/community/vectorstores/mongodb_atlas";
-import { CharacterTextSplitter } from "langchain/text_splitter";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+
+async function processPDFFile(file: File) {
+    const fileName = file.name.toLowerCase();
+    const tempFilePath = `/tmp/${fileName}`;
+
+    try {
+        // Write file to temp location
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
+        await fs.writeFile(tempFilePath, fileBuffer);
+
+        // Read and parse PDF
+        const dataBuffer = await fs.readFile(tempFilePath);
+        const pdfData = await pdf(dataBuffer);
+
+        // Clean up temp file
+        await fs.unlink(tempFilePath).catch(console.error);
+
+        return pdfData.text;
+    } catch (error: any) {
+        console.error(`Error processing PDF ${fileName}:`, error);
+        // Clean up temp file if it exists
+        await fs.unlink(tempFilePath).catch(() => {});
+        throw new Error(
+            `Failed to process PDF ${fileName}: ${error?.message || "Unknown error"}`,
+        );
+    }
+}
+
+async function splitTextIntoChunks(text: string) {
+    const textSplitter = new RecursiveCharacterTextSplitter({
+        chunkSize: 2000,
+        chunkOverlap: 200,
+        separators: ["\n\n", "\n", ". ", " ", ""],
+    });
+
+    return await textSplitter.splitText(text);
+}
 
 export async function POST(req: NextRequest) {
-  try {
-    const formData: FormData = await req.formData();
-    const uploadedFiles = formData.getAll("filepond");
-    let fileName = "";
-    let parsedText = "";
+    try {
+        const formData = await req.formData();
+        const uploadedFiles = formData.getAll("filepond");
 
-    if (uploadedFiles && uploadedFiles.length > 0) {
-      // Parse the data from uploaded file
-      const uploadedFile = uploadedFiles[1];
-      console.log("Uploaded file:", uploadedFile);
+        if (!uploadedFiles.length) {
+            return NextResponse.json(
+                { message: "No files found" },
+                { status: 400 },
+            );
+        }
 
-      if (uploadedFile instanceof File) {
-        fileName = uploadedFile.name.toLowerCase();
+        const processedFiles = [];
+        let totalChunks = 0;
 
-        const tempFilePath = `/tmp/${fileName}.pdf`;
-        const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
+        // Get MongoDB configuration
+        const vectorStoreArgs = await searchArgs();
 
-        await fs.writeFile(tempFilePath, fileBuffer);
-        let dataBuffer = fs.readFile(tempFilePath);
+        // Process each file in the array
+        for (const uploadedFile of uploadedFiles) {
+            if (!(uploadedFile instanceof File)) {
+                console.warn("Skipping non-file upload:", uploadedFile);
+                continue;
+            }
 
-        await pdf(await dataBuffer).then(async function (data: { text: any }) {
-          console.log(data.text);
-          // Collect the parsed data from the PDF file
-          parsedText = data.text;
+            try {
+                console.log(`Processing ${uploadedFile.name}...`);
 
-          // Spread data into chunks
-          const chunks = await new CharacterTextSplitter({
-            separator: "\n",
-            chunkSize: 3000,
-            chunkOverlap: 200,
-          }).splitText(parsedText);
-          console.log(chunks.length);
+                // Process PDF and get text
+                const parsedText = await processPDFFile(uploadedFile);
 
-          // Convert chunks to Vectors and store into MongoDB
-          await MongoDBAtlasVectorSearch.fromTexts(
-            chunks,
-            [],
-            getEmbeddingsTransformer(),
-            searchArgs(),
-          );
-        });
+                // Split text into chunks
+                const chunks = await splitTextIntoChunks(parsedText);
+                console.log(
+                    `Split ${uploadedFile.name} into ${chunks.length} chunks`,
+                );
+
+                // Create metadata for chunks
+                const chunksWithMetadata = chunks.map((chunk, index) => ({
+                    text: chunk,
+                    metadata: {
+                        filename: uploadedFile.name,
+                        uploadTime: new Date().toISOString(),
+                        chunkIndex: index,
+                        chunkLength: chunk.length,
+                        totalChunks: chunks.length,
+                    },
+                }));
+
+                // Create vector store instance
+                const vectorStore = new MongoDBAtlasVectorSearch(
+                    getEmbeddingsTransformer(),
+                    vectorStoreArgs,
+                );
+
+                // Store documents
+                await vectorStore.addDocuments(chunksWithMetadata);
+
+                totalChunks += chunks.length;
+                processedFiles.push({
+                    filename: uploadedFile.name,
+                    chunks: chunks.length,
+                });
+
+                console.log(`Successfully processed ${uploadedFile.name}`);
+            } catch (error: any) {
+                console.error(`Error processing ${uploadedFile.name}:`, error);
+                return NextResponse.json(
+                    {
+                        message: `Error processing ${uploadedFile.name}`,
+                        error: error?.message || "Unknown error",
+                    },
+                    { status: 500 },
+                );
+            }
+        }
+
         return NextResponse.json(
-          { message: "Uploaded to MongoDB" },
-          { status: 200 },
+            {
+                message: "Files processed successfully",
+                details: {
+                    filesProcessed: processedFiles.length,
+                    totalChunks: totalChunks,
+                    files: processedFiles,
+                },
+            },
+            { status: 200 },
         );
-      } else {
-        console.log("Uploaded file is not in the expected format.");
+    } catch (error: any) {
+        console.error("Error in upload handler:", error);
         return NextResponse.json(
-          { message: "Uploaded file is not in the expected format" },
-          { status: 500 },
+            {
+                message: "An error occurred during processing",
+                error: error?.message || "Unknown error",
+            },
+            { status: 500 },
         );
-      }
-    } else {
-      console.log("No files found.");
-      return NextResponse.json({ message: "No files found" }, { status: 500 });
     }
-  } catch (error) {
-    console.error("Error processing request:", error);
-    // Handle the error accordingly, for example, return an error response.
-    return new NextResponse("An error occurred during processing.", {
-      status: 500,
-    });
-  }
 }

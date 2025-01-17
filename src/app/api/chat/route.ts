@@ -1,17 +1,46 @@
 import { StreamingTextResponse, LangChainStream, Message } from "ai";
 import { ChatOpenAI } from "@langchain/openai";
-
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { vectorStore } from "@/utils/openai";
 import { NextResponse } from "next/server";
 import { BufferMemory } from "langchain/memory";
+import { Document } from "langchain/document";
+import { BaseMessage } from "@langchain/core/messages";
 
-export async function POST(req: Request) {
+interface SourceDocument extends Document {
+    metadata: {
+        filename: string;
+        uploadTime: string;
+        chunkIndex: number;
+        chunkLength: number;
+        totalChunks: number;
+    };
+    score?: number;
+}
+
+interface TransformedSource {
+    content: string;
+    metadata: {
+        filename: string;
+        chunkIndex: number;
+        totalChunks: number;
+    };
+}
+
+interface ChatResponse {
+    question: string;
+    chat_history: BaseMessage[];
+    text?: string;
+    sourceDocuments?: SourceDocument[];
+}
+
+export async function POST(req: Request): Promise<Response> {
+    const { stream, handlers } = LangChainStream();
+
     try {
-        const { stream, handlers } = LangChainStream();
         const body = await req.json();
         const messages: Message[] = body.messages ?? [];
-        const question = messages[messages.length - 1].content;
+        const question: string = messages[messages.length - 1].content;
 
         const model = new ChatOpenAI({
             temperature: 0.8,
@@ -19,7 +48,14 @@ export async function POST(req: Request) {
             callbacks: [handlers],
         });
 
-        const retriever = vectorStore().asRetriever();
+        console.log("Initializing vector store...");
+        const store = await vectorStore();
+        const retriever = store.asRetriever({
+            k: 3,
+            verbose: true,
+        });
+
+        console.log("Creating conversation chain...");
         const conversationChain = ConversationalRetrievalQAChain.fromLLM(
             model,
             retriever,
@@ -31,32 +67,74 @@ export async function POST(req: Request) {
                     outputKey: "text",
                 }),
                 returnSourceDocuments: true,
+                verbose: true,
             },
         );
+
         const response = await conversationChain.call({
             question: question,
         });
 
-        // Enhanced logging
-        console.log("Question:", question);
-        console.log("Response:", response);
-        if (response.sourceDocuments) {
-            console.log(
-                "Number of documents:",
-                response.sourceDocuments.length,
+        // Create a transformed version of source documents
+        const sources: TransformedSource[] =
+            response.sourceDocuments?.map((doc: SourceDocument) => ({
+                content: doc.pageContent.substring(0, 150) + "...", // First 150 chars
+                metadata: {
+                    filename: doc.metadata.filename,
+                    chunkIndex: doc.metadata.chunkIndex,
+                    totalChunks: doc.metadata.totalChunks,
+                },
+            })) ?? [];
+
+        // Create a ReadableStream to combine the response and sources
+        const combinedStream = new ReadableStream({
+            async start(controller) {
+                // Wait for the original stream to finish
+                const reader = stream.getReader();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    controller.enqueue(value);
+                }
+
+                // Add sources after the main content
+                if (sources && sources.length > 0) {
+                    const sourcesText =
+                        "\n\nSources:\n" +
+                        sources
+                            .map(
+                                (source: TransformedSource, i: number) =>
+                                    `${i + 1}. From ${source.metadata.filename} (Part ${source.metadata.chunkIndex + 1}/${source.metadata.totalChunks})`,
+                            )
+                            .join("\n");
+
+                    controller.enqueue(new TextEncoder().encode(sourcesText));
+                }
+
+                controller.close();
+            },
+        });
+
+        return new StreamingTextResponse(combinedStream);
+    } catch (error: unknown) {
+        console.error("Error in chat processing:", error);
+
+        if (error instanceof Error) {
+            return NextResponse.json(
+                {
+                    message: "Error Processing",
+                    error: error.message,
+                },
+                { status: 500 },
             );
-            response.sourceDocuments.forEach((doc, i) => {
-                console.log(`Document ${i + 1}:`, {
-                    text: doc.pageContent,
-                    metadata: doc.metadata,
-                });
-            });
         }
 
-        return new StreamingTextResponse(stream);
-    } catch (e) {
         return NextResponse.json(
-            { message: "Error Processing" },
+            {
+                message: "Unknown Error",
+                error: "An unexpected error occurred",
+            },
             { status: 500 },
         );
     }
