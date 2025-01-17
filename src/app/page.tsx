@@ -9,7 +9,7 @@ const Home = () => {
       <div className="relative">
         <div
           className="absolute inset-0 w-screen bg-[url('/background.jpg')] bg-cover bg-center opacity-30"
-          style={{ height: "100vh", minWidth: "100vw" }}
+          style={{ height: "90vh", minWidth: "100vw" }}
         ></div>
         <div className="relative px-4 py-16 sm:px-6 lg:px-8 text-gray-100">
           <div className="text-center py-20">
@@ -31,7 +31,7 @@ const Home = () => {
 
           <section
             id="meet-zeno"
-            className="mt-16 p-8 bg-neutral-900 rounded-lg backdrop-blur-sm"
+            className="p-8 bg-neutral-900 rounded-lg backdrop-blur-sm"
           >
             <h2 className="text-4xl font-bold mb-4 text-yellow-400">
               Meet Zeno
@@ -88,8 +88,8 @@ const Home = () => {
                 <strong>Student:</strong> Do problem 7 for me.
               </p>
               <p>
-                <strong>Zeno:</strong> Hi Kinjal! 😀 I&apos;m here to help you in Mr.
-                Smith&apos;s Algebra class! What are you working on?
+                <strong>Zeno:</strong> Hi Kinjal! 😀 I&apos;m here to help you
+                in Mr. Smith&apos;s Algebra class! What are you working on?
               </p>
               <p>
                 <strong>Student:</strong> It&apos;s multiplying binomials.
@@ -168,8 +168,8 @@ const Home = () => {
               Join Us in Transforming Education
             </h2>
             <p className="mb-6 text-gray-100">
-              Help us raise $200K to fund Zeno&apos;s next phase. Every contribution
-              brings us closer to empowering millions of students.
+              Help us raise $200K to fund Zeno&apos;s next phase. Every
+              contribution brings us closer to empowering millions of students.
             </p>
             <a
               href="mailto:hellozeno.tutor@gmail.com?subject=Supporting%20Zeno"

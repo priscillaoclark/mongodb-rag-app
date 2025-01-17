@@ -67,6 +67,7 @@ export async function POST(req: Request): Promise<Response> {
 
         const model = new ChatOpenAI({
             temperature: 0.8,
+            model: "gpt-4o",
             streaming: true,
             callbacks: [handlers],
         });
@@ -74,11 +75,11 @@ export async function POST(req: Request): Promise<Response> {
         console.log("Initializing vector store...");
         const store = await vectorStore();
         const retriever = store.asRetriever({
-            k: 3,
+            k: 4,
             verbose: true,
             metadata: {
                 retriever_type: "vector_store",
-                top_k: 3,
+                top_k: 4,
             },
         });
 
@@ -96,7 +97,7 @@ export async function POST(req: Request): Promise<Response> {
                 returnSourceDocuments: true,
                 verbose: true,
                 metadata: {
-                    llm: "gpt-4o-mini",
+                    llm: "gpt-4o",
                     app_version: "1.0.0",
                 },
                 tags: ["demo"],
