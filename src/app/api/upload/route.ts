@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@redis/client";
+import { createClient } from "redis";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { RedisVectorStore } from "langchain/vectorstores/redis";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
@@ -13,9 +13,30 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY environment variable");
 }
 
-const client = new Redis({
+const client = createClient({
   url: process.env.REDIS_URL,
 });
+
+// Connect to Redis
+await client.connect();
+
+// Create vector search index if it doesn't exist
+try {
+  await client.ft.create('docs_index', {
+    text_embedding: {
+      type: 'VECTOR',
+      ALGORITHM: 'HNSW',
+      DIM: 1536,
+      DISTANCE_METRIC: 'COSINE'
+    }
+  }, { PREFIX: 'doc:' });
+} catch (error) {
+  if (error.message === 'Index already exists') {
+    console.log('Index already exists');
+  } else {
+    console.error('Error creating index:', error);
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,6 +78,10 @@ export async function POST(request: NextRequest) {
 
     // Clean up temp file
     require("fs").unlinkSync(tempPath);
+
+    // Verify storage
+    const indexInfo = await client.ft.info('docs_index');
+    console.log('Index info:', indexInfo);
 
     return NextResponse.json({
       success: true,
