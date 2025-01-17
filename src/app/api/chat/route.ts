@@ -19,10 +19,7 @@ export async function POST(req: Request) {
             callbacks: [handlers],
         });
 
-        const retriever = vectorStore().asRetriever({
-            searchType: "similarity",
-            k: 3,
-        });
+        const retriever = vectorStore().asRetriever();
         const conversationChain = ConversationalRetrievalQAChain.fromLLM(
             model,
             retriever,
@@ -41,14 +38,17 @@ export async function POST(req: Request) {
         });
 
         // Enhanced logging
-        console.log('Question:', question);
-        console.log('Response:', response);
+        console.log("Question:", question);
+        console.log("Response:", response);
         if (response.sourceDocuments) {
-            console.log('Number of documents:', response.sourceDocuments.length);
+            console.log(
+                "Number of documents:",
+                response.sourceDocuments.length,
+            );
             response.sourceDocuments.forEach((doc, i) => {
                 console.log(`Document ${i + 1}:`, {
                     text: doc.pageContent,
-                    metadata: doc.metadata
+                    metadata: doc.metadata,
                 });
             });
         }
