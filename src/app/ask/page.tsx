@@ -32,13 +32,9 @@ export default function Home() {
       <NavBar />
 
       <main className="flex-1 container mx-auto max-w-4xl px-4 pt-20 pb-24">
-        {" "}
-        {/* Added pt-20 for navbar spacing */}
         {/* Welcome Message */}
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center space-y-8 min-h-[60vh]">
-            {" "}
-            {/* Changed h-[60vh] to min-h-[60vh] */}
             <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-900/20 to-blue-500/20 backdrop-blur-md shadow-xl">
               <div className="text-center space-y-4">
                 <div className="inline-block p-3 rounded-full bg-blue-600/20 mb-4">
@@ -49,7 +45,7 @@ export default function Home() {
                 </h2>
                 <p className="text-xl text-gray-300">Your AI Algebra Tutor</p>
                 <p className="text-gray-400 max-w-md mx-auto">
-                  I'm here to help you understand algebra concepts, solve
+                  I&apos;m here to help you understand algebra concepts, solve
                   equations, and master mathematical principles. Ask me
                   anything!
                 </p>
@@ -57,10 +53,9 @@ export default function Home() {
             </div>
           </div>
         )}
+
         {/* Messages Container */}
         <div className="space-y-6 mb-8">
-          {" "}
-          {/* Reduced bottom margin */}
           {messages.map((m) => (
             <div
               key={m.id}
@@ -105,6 +100,7 @@ export default function Home() {
           ))}
           <div ref={messagesEndRef} />
         </div>
+
         {/* Thinking Indicator */}
         {waitingForAI && (
           <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-10">
@@ -114,10 +110,9 @@ export default function Home() {
             </div>
           </div>
         )}
+
         {/* Input Form */}
         <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-10">
-          {" "}
-          {/* Added z-10 */}
           <div className="container mx-auto max-w-4xl">
             <form
               onSubmit={handleFormSubmit}
