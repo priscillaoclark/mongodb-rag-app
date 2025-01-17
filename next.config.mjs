@@ -1,14 +1,15 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
       serverComponentsExternalPackages: ["pdf-parse"],
     },
-    api: {
+    serverRuntimeConfig: {
       bodyParser: {
         sizeLimit: '75mb',
       },
       responseLimit: '75mb',
-    },
+    }
 };
 
 export default nextConfig;
