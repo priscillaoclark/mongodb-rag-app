@@ -40,8 +40,18 @@ export async function POST(req: Request) {
             question: question,
         });
 
-        // Log source documents
-        console.log('Retrieved documents:', response.sourceDocuments);
+        // Enhanced logging
+        console.log('Question:', question);
+        console.log('Response:', response);
+        if (response.sourceDocuments) {
+            console.log('Number of documents:', response.sourceDocuments.length);
+            response.sourceDocuments.forEach((doc, i) => {
+                console.log(`Document ${i + 1}:`, {
+                    text: doc.pageContent,
+                    metadata: doc.metadata
+                });
+            });
+        }
 
         return new StreamingTextResponse(stream);
     } catch (e) {
