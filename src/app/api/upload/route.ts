@@ -23,22 +23,31 @@ await client.connect();
 // Create vector search index if it doesn't exist
 try {
   await client.ft.create(
-    "docs_index",
+    'docs_index',
     {
-      text_embedding: {
-        type: "VECTOR",
-        ALGORITHM: "HNSW",
+      '$.embedding': {
+        type: 'VECTOR',
+        ALGORITHM: 'HNSW',
         DIM: 1536,
-        DISTANCE_METRIC: "COSINE",
+        DISTANCE_METRIC: 'COSINE'
       },
-    },
-    { PREFIX: "doc:" },
+      '$.text': {
+        type: 'TEXT'
+      },
+      '$.metadata': {
+        type: 'TEXT'
+      }
+    } as any,
+    {
+      ON: 'JSON',
+      PREFIX: 'doc:'
+    }
   );
 } catch (error) {
-  if (error.message === "Index already exists") {
-    console.log("Index already exists");
+  if (error.message === 'Index already exists') {
+    console.log('Index already exists');
   } else {
-    console.error("Error creating index:", error);
+    console.error('Error creating index:', error);
   }
 }
 
