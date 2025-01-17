@@ -60,7 +60,9 @@ export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
         textKey: "text",
         embeddingKey: "text_embedding",
         similarity: "cosine",
-        k: 4, // Number of results to return
+        k: 4,
+        minScore: 0.6,
+        searchType: "similarity",
     };
     return searchArgs;
 }
