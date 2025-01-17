@@ -25,7 +25,7 @@ console.log('Redis URL format (redacted):', process.env.REDIS_URL?.replace(/\/\/
 // Create vector search index if it doesn't exist
 try {
   await client.ft.create(
-    'docs_index',
+    'documents',
     {
       '$.embedding': {
         type: 'VECTOR',
@@ -47,11 +47,13 @@ try {
       PREFIX: 'doc:'
     }
   );
-} catch (error) {
-  if (error.message === 'Index already exists') {
-    console.log('Index already exists');
+  console.log('Index created successfully');
+} catch (error: any) {
+  if (error.message.includes('Index already exists')) {
+    console.log('Index already exists, continuing...');
   } else {
     console.error('Error creating index:', error);
+    throw error;
   }
 }
 
