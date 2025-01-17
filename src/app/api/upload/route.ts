@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "redis";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { RedisVectorStore } from "langchain/vectorstores/redis";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { RedisVectorStore } from "@langchain/community/vectorstores/redis";
+import { PDFLoader } from "@langchain/community/document_loaders/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 if (!process.env.REDIS_URL) {
