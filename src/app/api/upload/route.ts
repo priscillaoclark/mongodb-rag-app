@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     const splitDocs = await textSplitter.splitDocuments(docs);
 
     // Create vector store
-    const vectorStore = await RedisVectorStore.fromDocuments(
+    await RedisVectorStore.fromDocuments(
       splitDocs,
       new OpenAIEmbeddings(),
       {
