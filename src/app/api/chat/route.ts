@@ -2,7 +2,6 @@ import { StreamingTextResponse, LangChainStream, Message } from "ai";
 import { ChatOpenAI } from "@langchain/openai";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { vectorStore } from "@/utils/openai";
-import { NextResponse } from "next/server";
 import { BufferMemory } from "langchain/memory";
 import { Document } from "langchain/document";
 import { BaseMessage } from "@langchain/core/messages";
@@ -35,9 +34,9 @@ interface ChatResponse {
 }
 
 export async function POST(req: Request): Promise<Response> {
-    const { stream, handlers } = LangChainStream();
-
     try {
+        const { stream, handlers } = LangChainStream();
+
         const body = await req.json();
         const messages: Message[] = body.messages ?? [];
         const question: string = messages[messages.length - 1].content;
@@ -53,6 +52,10 @@ export async function POST(req: Request): Promise<Response> {
         const retriever = store.asRetriever({
             k: 3,
             verbose: true,
+            metadata: {
+                retriever_type: "vector_store",
+                top_k: 3,
+            },
         });
 
         console.log("Creating conversation chain...");
@@ -68,17 +71,25 @@ export async function POST(req: Request): Promise<Response> {
                 }),
                 returnSourceDocuments: true,
                 verbose: true,
+                metadata: {
+                    llm: "gpt-4o-mini",
+                    app_version: "1.0.0",
+                },
             },
         );
 
-        const response = await conversationChain.call({
+        const response = (await conversationChain.call({
             question: question,
-        });
+            langsmith_extra: {
+                metadata: {
+                    user_id: body.userId, // Pass through from request if available
+                },
+            },
+        })) as ChatResponse; // Type assertion since we know the shape of the response
 
-        // Create a transformed version of source documents
-        const sources: TransformedSource[] =
+        const sources =
             response.sourceDocuments?.map((doc: SourceDocument) => ({
-                content: doc.pageContent.substring(0, 150) + "...", // First 150 chars
+                content: doc.pageContent.substring(0, 150) + "...",
                 metadata: {
                     filename: doc.metadata.filename,
                     chunkIndex: doc.metadata.chunkIndex,
@@ -86,10 +97,8 @@ export async function POST(req: Request): Promise<Response> {
                 },
             })) ?? [];
 
-        // Create a ReadableStream to combine the response and sources
         const combinedStream = new ReadableStream({
             async start(controller) {
-                // Wait for the original stream to finish
                 const reader = stream.getReader();
 
                 while (true) {
@@ -98,7 +107,6 @@ export async function POST(req: Request): Promise<Response> {
                     controller.enqueue(value);
                 }
 
-                // Add sources after the main content
                 if (sources && sources.length > 0) {
                     const sourcesText =
                         "\n\nSources:\n" +
@@ -119,22 +127,35 @@ export async function POST(req: Request): Promise<Response> {
         return new StreamingTextResponse(combinedStream);
     } catch (error: unknown) {
         console.error("Error in chat processing:", error);
-        
-        const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+
+        const errorMessage =
+            error instanceof Error
+                ? error.message
+                : "An unexpected error occurred";
         console.error("Detailed error:", errorMessage);
+
+        // Log error metadata for tracing
+        const metadata = {
+            error_type:
+                error instanceof Error
+                    ? error.constructor.name
+                    : "UnknownError",
+            error_message: errorMessage,
+            timestamp: new Date().toISOString(),
+        };
 
         return new Response(
             JSON.stringify({
                 message: "Error Processing",
                 error: errorMessage,
-                timestamp: new Date().toISOString()
-            }), 
+                timestamp: new Date().toISOString(),
+            }),
             {
                 status: 500,
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
+                    "Content-Type": "application/json",
+                },
+            },
         );
     }
 }
