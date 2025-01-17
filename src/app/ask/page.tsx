@@ -21,7 +21,7 @@ export default function Home() {
     scrollToBottom();
   }, [messages]);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!input.trim()) return;
     setWaitingForAI(true);
     handleSubmit(e);
