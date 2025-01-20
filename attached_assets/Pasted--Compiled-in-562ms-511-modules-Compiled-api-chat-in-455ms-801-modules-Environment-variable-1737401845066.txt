@@ -1,0 +1,43 @@
+ ✓ Compiled in 562ms (511 modules)
+ ✓ Compiled /api/chat in 455ms (801 modules)
+Environment variables check: {
+  LANGCHAIN_TRACING_V2: 'true',
+  LANGCHAIN_PROJECT: 'demo',
+  LANGCHAIN_API_KEY_SET: true
+}
+Environment check: {
+  LANGCHAIN_TRACING_V2: 'true',
+  LANGCHAIN_PROJECT: 'demo',
+  LANGCHAIN_API_KEY_SET: true
+}
+Initializing vector store...
+Initializing new MongoDB connection...
+MongoDB connected successfully
+Collection uploads initialized
+Creating conversation chain...
+Error in chat processing: TypeError: this.chatHistory.getMessages is not a function
+    at BufferMemory.loadMemoryVariables (webpack-internal:///(rsc)/./node_modules/langchain/dist/memory/buffer_memory.js:86:49)
+    at ConversationalRetrievalQAChain._formatValues (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:143:49)
+    at ConversationalRetrievalQAChain.invoke (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:60:39)
+    at ConversationalRetrievalQAChain.call (webpack-internal:///(rsc)/./node_modules/langchain/dist/chains/base.js:161:21)
+    at POST (webpack-internal:///(rsc)/./src/app/api/chat/route.ts:132:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/home/runner/workspace/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1333:42)
+    at async cacheEntry.responseCache.get.routeKind (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/runner/workspace/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/home/runner/workspace/node_modules/next/dist/server/base-server.js:807:17)
+    at async /home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/home/runner/workspace/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/home/runner/workspace/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/home/runner/workspace/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/home/runner/workspace/node_modules/next/dist/server/lib/start-server.js:140:13)
+Detailed error: this.chatHistory.getMessages is not a function
