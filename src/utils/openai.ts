@@ -30,16 +30,18 @@ async function initMongoDB() {
         if (!collectionInstance) {
             const namespace = "textbooks.uploads";
             const [dbName, collectionName] = namespace.split(".");
-            
+
             const db = clientInstance.db(dbName);
             const collections = await db.listCollections().toArray();
-            const collectionExists = collections.some(col => col.name === collectionName);
-            
+            const collectionExists = collections.some(
+                (col) => col.name === collectionName,
+            );
+
             if (!collectionExists) {
                 console.log(`Creating collection ${collectionName}...`);
                 await db.createCollection(collectionName);
             }
-            
+
             collectionInstance = db.collection(collectionName);
             console.log(`Collection ${collectionName} initialized`);
         }
