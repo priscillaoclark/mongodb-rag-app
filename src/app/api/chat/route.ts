@@ -65,8 +65,10 @@ export async function POST(req: Request): Promise<Response> {
         const messages: Message[] = body.messages ?? [];
         const question: string = messages[messages.length - 1].content;
 
-        // Create chat history from previous messages
-        const chatHistory = messages.slice(0, -1).map(m => m.content).join("\n");
+        // Format chat history as an array of [human, ai] pairs
+        const chatHistory = messages.slice(0, -1).map((m, i) => {
+            if (i % 2 === 0) return [m.content, messages[i + 1]?.content || ""];
+        }).filter(Boolean);
 
         const model = new ChatOpenAI({
             temperature: 0.8,
@@ -158,9 +160,10 @@ Helpful Answer:`,
 
         const response = (await conversationChain.call({
             question: question,
+            chat_history: chatHistory,
             langsmith_extra: {
                 metadata: {
-                    user_id: body.userId, // Pass through from request if available
+                    user_id: body.userId,
                 },
             },
         })) as ChatResponse; // Type assertion since we know the shape of the response
