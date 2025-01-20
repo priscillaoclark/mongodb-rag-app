@@ -65,6 +65,9 @@ export async function POST(req: Request): Promise<Response> {
         const messages: Message[] = body.messages ?? [];
         const question: string = messages[messages.length - 1].content;
 
+        // Create chat history from previous messages
+        const chatHistory = messages.slice(0, -1).map(m => m.content).join("\n");
+
         const model = new ChatOpenAI({
             temperature: 0.8,
             model: "gpt-4o",
@@ -93,6 +96,7 @@ export async function POST(req: Request): Promise<Response> {
                     returnMessages: true,
                     inputKey: "question",
                     outputKey: "text",
+                    chatHistory: chatHistory,
                 }),
                 returnSourceDocuments: true,
                 verbose: true,
