@@ -96,7 +96,6 @@ export async function POST(req: Request): Promise<Response> {
                     returnMessages: true,
                     inputKey: "question",
                     outputKey: "text",
-                    chatHistory: chatHistory,
                 }),
                 returnSourceDocuments: true,
                 verbose: true,
