@@ -1,17 +1,17 @@
 "use client";
 
-import { useChat } from "ai/react";
 import { useState, useRef, useEffect } from "react";
+import { InMemoryChatMessageHistory } from "@langchain/core/chat_history";
 import NavBar from "../component/navbar";
 import { MessageSquare, Send, Loader2 } from "lucide-react";
+import { HumanMessage, AIMessage } from "@langchain/core/messages";
 
 export default function Home() {
   const [waitingForAI, setWaitingForAI] = useState<boolean>(false);
+  const [input, setInput] = useState<string>(""); // Manage input state locally
+  const [messages, setMessages] = useState<any[]>([]); // To display messages
+  const chatHistory = useRef(new InMemoryChatMessageHistory());
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    onResponse: () => setWaitingForAI(false),
-    onFinish: () => setWaitingForAI(false),
-  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,10 +21,62 @@ export default function Home() {
     scrollToBottom();
   }, [messages]);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!input.trim()) return;
+
+    // Immediately show the user's input
+    setMessages((prev) => [...prev, { role: "user", content: input }]);
+    setInput(""); // Clear the input field
+
     setWaitingForAI(true);
-    handleSubmit(e);
+
+    const userMessage = new HumanMessage(input);
+    await chatHistory.current.addMessage(userMessage);
+
+    const serializedHistory = await chatHistory.current.getMessages();
+
+    try {
+      // API call
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: input }],
+          chatHistory: serializedHistory.map((m) => ({
+            role: m instanceof HumanMessage ? "user" : "assistant",
+            content: m.content,
+          })),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch response from the server.");
+      }
+
+      const result = await response.json();
+      console.log("Response from backend:", result.response);
+
+      // Add AI response to chat history
+      const aiMessage = new AIMessage(
+        result.response || "No response received",
+      );
+      await chatHistory.current.addMessage(aiMessage);
+
+      // Update local state for UI
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: result.response || "No response received",
+        },
+      ]);
+    } catch (error) {
+      console.error("Error while fetching AI response:", error);
+    } finally {
+      setInput(""); // Clear input field
+      setWaitingForAI(false); // Stop the waiting indicator
+    }
   };
 
   return (
@@ -56,9 +108,9 @@ export default function Home() {
 
         {/* Messages Container */}
         <div className="space-y-6 mb-8">
-          {messages.map((m) => (
+          {messages.map((m, index) => (
             <div
-              key={m.id}
+              key={index}
               className={`flex gap-4 ${
                 m.role === "assistant" ? "justify-start" : "justify-end"
               }`}
@@ -73,7 +125,9 @@ export default function Home() {
                 </div>
               )}
               <div
-                className={`flex max-w-[80%] ${m.role === "user" ? "flex-row-reverse" : ""}`}
+                className={`flex max-w-[80%] ${
+                  m.role === "user" ? "flex-row-reverse" : ""
+                }`}
               >
                 <div
                   className={`px-4 py-3 rounded-2xl shadow-lg ${
@@ -120,7 +174,7 @@ export default function Home() {
             >
               <input
                 value={input}
-                onChange={handleInputChange}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask me anything about algebra..."
                 className="flex-1 bg-transparent px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none"
                 disabled={waitingForAI}
